@@ -1,0 +1,73 @@
+//contains miscellaneous styles for the mainpage and loadinng spinners 
+
+.main{
+    height:100vh;
+    background-color:#444;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.callpost{
+    height:500px;
+    padding:2rem;
+}
+
+figure {
+    /* -webkit-transition: all 0.8s ease-in-out; */
+    -moz-transition: all 0.8s ease-in-out;
+    -o-transition: all 0.8s ease-in-out;
+    transition: all 0.8s ease-in-out;
+    background-position: center center;
+    background-size: cover;
+    box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.2) inset;
+}
+
+.no-gutter [class*='col-'] {
+    padding-right: 0;   
+    padding-left: 0;
+}
+
+.page1Container{
+    display: inline-block;
+    -webkit-transition: all ease-in-out 0.5s;
+    transition: all ease-in-out 0.5s;
+}
+.page1Container.ng-enter {
+    transform: rotateZ(180deg)
+}
+
+.main-loading-spinner{
+  transition: all 200ms ease-in-out;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* default .loading styles, .loading should be invisible, opacity: 0, z-index: -1 */
+.loading {
+    opacity: 0;
+    transition: all .5s ease-in-out;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+/* .loading screen is visible when app is not bootstraped yet, .my-app is empty */
+my-app:empty + .loading {
+    opacity: 1;
+    z-index: 100;
+    background: #444;
+}
+
+@media all and (max-width: 500px) {
+    .main-loading-spinner{
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    }
+
+}
