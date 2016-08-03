@@ -1,0 +1,37 @@
+blog front end app listening on port 4000
+/home/pi/nodesites/personal-blog/node_modules
+/home/pi/nodesites/personal-blog/app/build
+blog front end app listening on port 4000
+/home/pi/nodesites/personal-blog/node_modules
+/home/pi/nodesites/personal-blog/app/build
+RangeNotSatisfiableError: Range Not Satisfiable
+    at SendStream.error (/home/pi/nodesites/personal-blog/node_modules/express/node_modules/send/index.js:245:31)
+    at SendStream.send (/home/pi/nodesites/personal-blog/node_modules/express/node_modules/send/index.js:564:19)
+    at onstat (/home/pi/nodesites/personal-blog/node_modules/express/node_modules/send/index.js:624:10)
+    at Object.oncomplete (fs.js:108:15)
+
+events.js:72
+        throw er; // Unhandled 'error' event
+              ^
+Error: listen EACCES
+    at errnoException (net.js:905:11)
+    at Server._listen2 (net.js:1024:19)
+    at listen (net.js:1065:10)
+    at Server.listen (net.js:1139:5)
+    at EventEmitter.listen (/home/pi/nodesites/personal-blog/node_modules/express/lib/application.js:617:24)
+    at Object.<anonymous> (/home/pi/nodesites/personal-blog/express/app.js:22:5)
+    at Module._compile (module.js:456:26)
+    at Object.Module._extensions..js (module.js:474:10)
+    at Module.load (module.js:356:32)
+    at Function.Module._load (module.js:312:12)
+blog front end app listening on port 4000
+/home/pi/nodesites/personal-blog/node_modules
+/home/pi/nodesites/personal-blog/app/build
+blog front end app listening on port 4000
+/home/pi/nodesites/personal-blog/node_modules
+/home/pi/nodesites/personal-blog/app/build
+sudo: app.js: command not found
+sudo: app.js: command not found
+blog front end app listening on port 4000
+/home/pi/nodesites/personal-blog/node_modules
+/home/pi/nodesites/personal-blog/app/build

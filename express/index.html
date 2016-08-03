@@ -1,0 +1,30 @@
+<html>
+    <head>
+                <link rel="stylesheet" href="bootstrap/dist/css/bootstrap.css">
+        <link rel="stylesheet" href="build/css/styles.css">
+    </head>
+    <body class = "main">
+        <my-app></my-app>
+        
+    <div class="loading">
+        <img class="main-loading-spinner" src="cube.gif"></img>
+    </div>
+    
+            <title>Robert Smith</title>
+        <!-- 1. Load libraries -->
+        <script src="es6-shim/es6-shim.min.js"></script>
+        <script src="zone.js/dist/zone.js"></script>
+        <script src="reflect-metadata/Reflect.js"></script>
+        <script src="systemjs/dist/system.src.js"></script>
+        <script src='@angular/common/'></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/systemjs/0.19.24/system.js"></script>
+    </head>
+    <!-- 3. Display the application -->
+    <script src="systemjs.config.js"></script>
+    <script src="build/js/app.js"></script>
+    <script>
+        console.log("system is",  System.import('build/js/app.js'));
+         System.import('build/js/app.js').catch(function(err){ console.error("error is", err); });
+    </script>
+    </body>
+</html>
