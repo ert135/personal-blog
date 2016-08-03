@@ -8,6 +8,7 @@
 import { Component } from '@angular/core';                // 1a
 import { bootstrap } from '@angular/platform-browser-dynamic';   // 1b
 import { MainPage } from './main-page';  
+import { MainHeader } from './main-header';  
 
 /**
  ** 2a. Pass in the name for the HTML class selector (<my-app></my-app>)
@@ -19,11 +20,12 @@ import { MainPage } from './main-page';
     selector: 'my-app',
     // 2c
     template: `
-    <div class = "main">    
+    <div class = "main"> 
+        <main-header></main-header>   
         <main-page></main-page>
     </div>
     `,
-    directives: [MainPage] 
+    directives: [MainPage, MainHeader] 
 })
 
 

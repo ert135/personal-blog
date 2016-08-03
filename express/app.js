@@ -19,7 +19,7 @@ app.use('/static', express.static(__dirname + '/app'));
 app.use('/app', express.static(path.resolve(__dirname, 'app')));
 app.use('/libs', express.static(path.resolve(__dirname, 'node_modules')));
 
-app.listen(80, function() {
+app.listen(4000, function() {
     console.log('blog front end app listening on port 4000');
     console.log(path.join(__dirname, '/../node_modules'));
     console.log(path.join(__dirname + '/../app/build'));
