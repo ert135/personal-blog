@@ -1,31 +1,42 @@
+<!DOCTYPE html>
 <html>
-    <head>
-        <link rel="stylesheet" href="bootstrap/dist/css/bootstrap.css">
-        <link rel="stylesheet" href="build/css/styles.css">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body class = "main">
-        <my-app></my-app>
-        
+  <head>
+    <title>Robert smith</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="build/css/styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
     <div class="loading">
         <img class="main-loading-spinner" src="cube.gif"></img>
     </div>
-    
-            <title>Robert Smith</title>
-        <!-- 1. Load libraries -->
-        <script src="es6-shim/es6-shim.min.js"></script>
-        <script src="zone.js/dist/zone.js"></script>
-        <script src="reflect-metadata/Reflect.js"></script>
-        <script src="systemjs/dist/system.src.js"></script>
-        <script src='@angular/common/'></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/systemjs/0.19.24/system.js"></script>
-    </head>
-    <!-- 3. Display the application -->
-    <script src="systemjs.config.js"></script>
-    <script src="build/js/app.js"></script>
+  <!-- 3. Display the application -->
+  <body class = "main">
+    <my-app></my-app>
+
+    <div class="loading">
+        <img class="main-loading-spinner" src="cube.gif"></img>
+    </div>
+    <!-- 1. Load libraries -->
+     <!-- Polyfill for older browsers -->
+    <script src="https://unpkg.com/core-js/client/shim.min.js"></script>
+
+    <script src="https://unpkg.com/zone.js@0.6.25?main=browser"></script>
+    <script src="https://unpkg.com/reflect-metadata@0.1.8"></script>
+    <script src="https://unpkg.com/systemjs@0.19.39/dist/system.src.js"></script>
+
+    <!-- 2. Configure SystemJS -->
+    <script src="config/systemjs.config.js"></script>
     <script>
-        console.log("system is",  System.import('build/js/app.js'));
-         System.import('build/js/app.js').catch(function(err){ console.error("error is", err); });
+      System.import('app').catch(function(err){ console.error(err); });
     </script>
-    </body>
+    
+  </body>
 </html>
+
+
+<!-- 
+Copyright 2016 Google Inc. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at http://angular.io/license
+-->
