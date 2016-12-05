@@ -2,14 +2,26 @@
 
 .main{
     height:100vh;
-    background-color:#444;
+    background-color:#222;
     max-width: 100%;
-    overflow-x: hidden;
 }
 
 .callpost{
     height:500px;
     padding:2rem;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 10px;
+
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.main-page-container{
+    border-left:20px solid #222;
+    border-right:20px solid #222;
+    margin-top:76px;
 }
 
 figure {
@@ -27,16 +39,14 @@ figure {
     padding-left: 0;
 }
 
-.page1Container{
+.page1Container {
+    -webkit-transition: all ease-in 0.5s;
+    transition: all ease-in 0.5s;
     display: inline-block;
-    -webkit-transition: all ease-in-out 0.5s;
-    transition: all ease-in-out 0.5s;
-}
-.page1Container.ng-enter {
-    transform: rotateZ(180deg)
+    width:100%;
 }
 
-.main-loading-spinner{
+.main-loading-spinner {
   transition: all 200ms ease-in-out;
   position: absolute;
   top: 50%;

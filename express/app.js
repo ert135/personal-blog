@@ -2,7 +2,7 @@ var express = require('express');
 var path = require('path');
 var app = express();
 var angularApp = "../index.html"
-var port = 4000
+var port = 80;
 
 app.get('/', function(req, res) {
     res.sendFile(__dirname + '/index.html');
