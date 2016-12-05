@@ -4,7 +4,6 @@
     var gulp        = require("gulp"),
         sourcemaps  = require("gulp-sourcemaps"),
         livereload  = require("gulp-livereload"),
-        notify      = require("gulp-notify"),
         plumber     = require("gulp-plumber"),
         ts          = require("gulp-typescript"),
         less        = require("gulp-less"),

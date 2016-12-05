@@ -1,8 +1,10 @@
 {
+  
   "name": "personal-blog",
   "version": "1.0.0",
   "scripts": {
-
+    "start": "node app.js",
+    "build": "tsc"
   },
   "license": "ISC",
   "dependencies": {
@@ -31,12 +33,13 @@
     "gulp-notify": "^2.2.0",
     "gulp-plumber": "^1.1.0",
     "gulp-sourcemaps": "^1.6.0",
-    "gulp-typescript": "^2.13.4",
+    "gulp-typescript": "^2.13.4"
 
+  },
+  "devDependencies": {
     "@types/core-js": "^0.9.34",
     "@types/node": "^6.0.45",
     "concurrently": "^3.0.0",
     "typescript": "^2.0.3"
-
   }
 }
