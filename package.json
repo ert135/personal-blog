@@ -1,13 +1,8 @@
 {
-  "name": "angular2-quickstart",
+  "name": "personal-blog",
   "version": "1.0.0",
   "scripts": {
-    "start": "node app.js",
-    "lite": "lite-server",
-    "postinstall": "typings install",
-    "tsc": "tsc",
-    "tsc:w": "tsc -w",
-    "typings": "typings"
+
   },
   "license": "ISC",
   "dependencies": {
