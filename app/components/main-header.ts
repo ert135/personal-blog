@@ -7,6 +7,7 @@ import {loginModalWrapper} from './modalDirective';
 @Component({
     selector: 'main-header',
     template: `
+    
         <div class="main-header">
             <h1 class="main-header__title"> Robert Smith </h1>
             <ul class="main-header__links">
