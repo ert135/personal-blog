@@ -1,8 +1,9 @@
 import {Component, ViewChild, NgModule} from '@angular/core';
 import { ViewContainerRef } from '@angular/core';
 
-import {LoginModal} from './login.component';
-import {loginModalWrapper} from './modalDirective';
+import { LoginModal } from './login.component';
+import { loginModalWrapper } from './modalDirective';
+import { SignedInUserService } from './stores/signedInUser/signedInUser.service';
 
 @Component({
     selector: 'main-header',
@@ -22,8 +23,15 @@ import {loginModalWrapper} from './modalDirective';
                 </li>
             </ul>
             <div class="main-header__login-button"
-                (click)='openLoginWindow()'>
-                login
+                (click)='openLoginWindow()'
+                *ngIf="!name">
+                Log In
+            </div>
+            <div class="main-header__login-button"
+                (click)='openLoginWindow()'
+                *ngIf="name"
+                [innerHTML]="name"
+                >
             </div>
         </div>
         <div loginmodalwrapper></div>
@@ -34,9 +42,30 @@ import {loginModalWrapper} from './modalDirective';
     host: {'class' : 'ng-animate'}
 })
 export class MainHeader {
+
+
+    private name: string = null;
+
+    constructor(
+        private SignedInUserService: SignedInUserService
+    ){
+       
+    }
+
     @ViewChild(loginModalWrapper) dialogAnchor: loginModalWrapper;
     openLoginWindow() {
-        console.log("Opening window");
-        this.dialogAnchor.createDialog(LoginModal);
+        //any used below to make the compiler behave itself
+        //TODO make anhcor component generic to allow passing in any component to display
+        this.dialogAnchor.createDialog(<any>LoginModal);
+
     }
+
+    ngOnInit() {
+        this.SignedInUserService.getSignedInUserSubscription()
+            .subscribe((data: any) => {
+               if(data){
+                   this.name = data.name;
+               }
+        })
+	}
 }

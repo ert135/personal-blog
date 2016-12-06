@@ -39,8 +39,7 @@ export class MainPage {
 	postItems: any;
 	
 	constructor(
-		private postService: MainPostService, 
-		private formBuilder: FormBuilder
+		private postService: MainPostService
 	) {
 		this.postItems = []
 	}
@@ -48,8 +47,8 @@ export class MainPage {
 	ngOnInit() {
 		this.postService.loadAll();
 		
-		this.postService.getDataStore().subscribe((data) => {
-			console.log("Data is", data);
+		this.postService.getDataStore()
+			.subscribe((data) => {
 			this.postItems = data.posts;
 		})
 
