@@ -16,9 +16,6 @@ import {
     selector: 'main-page',
 	providers: [MainPostService],
     template: `
-	<div class="login-modal__loading-icon" *ngIf="loading == true" [@loadingState]="loading == true">
-		<img class="main-loading-spinner" src="default.svg">
-	</div>
 	<div class="no-gutter main-page-container" *ngIf="loading == false" [@loadingState]="loading == false">
 		<div class="col-md-6" *ngFor='let post of postItems'>
 			<a [routerLink]="['/post', post.id]">

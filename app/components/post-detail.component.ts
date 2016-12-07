@@ -6,12 +6,18 @@ import { BehaviorSubject } from 'rxjs/Rx';
 import { PostListItem } from './models/post';
 import { FormBuilder, Validators} from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { 
+	animate, 
+    trigger, 
+    state, 
+    style, 
+    transition } from '@angular/core';
 
 @Component({
     selector: 'main-page',
 	providers: [MainPostService],
     template: `
-	<div class="no-gutter detail-page-container">
+	<div class="no-gutter detail-page-container"  *ngIf="loading == false" [@loadingState]="loading == false">
         <div class="post-detail">
             <aside class="post-detail__aside">
               <div class="post-detail__aside-image" [ngStyle]="{ 'background-image': 'url(' + post.pictureUrl + ')'}">
@@ -41,13 +47,24 @@ import { ActivatedRoute } from '@angular/router';
         </div>
 	</div>
     `,
-    host: {'class' : 'ng-animate page1Container'}
+    animations: [
+        trigger('loadingState', [
+            transition(':enter', [ 
+            style({opacity:0}),
+                animate(300, style({opacity:1})) 
+            ]),
+            transition(':leave', [  
+                animate(300, style({opacity:0})) 
+            ])
+        ])
+    ],
+    host: {'class' : 'page1Container'}
 })
 export class PostDetailComponent {
 	posts: Observable<PostListItem[]>;
 	singlePost$: Observable<PostListItem>;
 	post: any;
-    asd : string;
+    loading: boolean;
 	
 	constructor(
 		private postService: MainPostService,
@@ -65,6 +82,7 @@ export class PostDetailComponent {
 
         this.post = this.postService.getDataStore()
 			.subscribe((data) => {
+                this.loading = data.loading;
                 this.post = data.posts[0];
                 console.log("Post is now, ", this.post);
 		})

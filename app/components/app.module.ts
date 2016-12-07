@@ -17,7 +17,7 @@ import { LoginService } from './stores/login/login.service';
 import { SignedInUserService } from './stores/signedInUser/signedInUser.service';
 
 const appRoutes: Routes = [
-  { path: '', component: MainPage },
+  { path: '', component: MainPage, pathMatch: 'full'  },
   { path: 'post/:id', component: PostDetailComponent }
   //wildcard route is **, make pagentofound component
 ];
