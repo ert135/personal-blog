@@ -62,6 +62,20 @@ export class MainPostService {
         );
     }
 
+    public loadPost(id: number) {
+        this.postDataStore.loading = true;
+        this.http.get(`${this.apiUrl}/posts/${id}`)
+            .map(response => response.json())
+            .subscribe(data => {
+                console.log("Data is", data);
+                this.postDataStore.posts = data;
+                this.postDataStore.loading = false
+                this._posts.next(Object.assign({}, this.postDataStore));
+        }, 
+            error => console.log('Could not load post.')
+        );
+    }
+
     public setDefaultLoadingState(): IPostData{
         return {
             posts: [],

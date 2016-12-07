@@ -5,38 +5,61 @@ import { Observable } from 'rxjs/Rx';
 import { BehaviorSubject } from 'rxjs/Rx';
 import { PostListItem } from './models/post';
 import { FormBuilder, Validators} from '@angular/forms';
+import { 
+	animate, 
+    trigger, 
+    state, 
+    style, 
+    transition } from '@angular/core';
 
 @Component({
     selector: 'main-page',
 	providers: [MainPostService],
     template: `
-	<div class="no-gutter main-page-container">
+	<div class="login-modal__loading-icon" *ngIf="loading == true" [@loadingState]="loading == true">
+		<img class="main-loading-spinner" src="default.svg">
+	</div>
+	<div class="no-gutter main-page-container" *ngIf="loading == false" [@loadingState]="loading == false">
 		<div class="col-md-6" *ngFor='let post of postItems'>
-			<figure [ngStyle]="{ 'background-image': 'url(' + post.pictureUrl + ')'}"
-					class="callpost" 
-					data-num="1"
-					data-property="border-width" 
-					data-from="0" 
-					data-to="35px"
-			>
-				<div class="content">
-					<div class="content-wraper">
-						<h2>{{post.title}}</h2>
-						<div class="comment-count">{{post.comments}} Comments <i class="fa fa-comments-o"></i> </div>
-						<div class="excerpt">{{post.subtitle}} </div>
-						<div class="postinfo"><span>{{post.postedOn}}</span> </div>
+			<a [routerLink]="['/post', post.id]">
+				<figure [ngStyle]="{ 'background-image': 'url(' + post.pictureUrl + ')'}"
+						class="callpost" 
+						data-num="1"
+						data-property="border-width" 
+						data-from="0" 
+						data-to="35px"
+				>
+					<div class="content">
+						<div class="content-wraper">
+							<h2>{{post.title}}</h2>
+							<div class="comment-count">{{post.comments}} Comments <i class="fa fa-comments-o"></i> </div>
+							<div class="excerpt">{{post.subtitle}} </div>
+							<div class="postinfo"><span>{{post.postedOn}}</span> </div>
+						</div>
 					</div>
-				</div>
-			</figure>
+				</figure>
+			</a>
 		</div>
 	</div>
     `,
+	animations: [
+        trigger('loadingState', [
+            transition(':enter', [   // :enter is alias to 'void => *'
+            style({opacity:0}),
+                animate(300, style({opacity:1})) 
+            ]),
+            transition(':leave', [   // :leave is alias to '* => void'
+                animate(300, style({opacity:0})) 
+            ])
+        ])
+    ],
     host: {'class' : 'ng-animate page1Container'}
 })
 export class MainPage {
 	posts: Observable<PostListItem[]>;
 	singlePost$: Observable<PostListItem>;
 	postItems: any;
+	private loading: boolean;
 	
 	constructor(
 		private postService: MainPostService
@@ -49,6 +72,8 @@ export class MainPage {
 		
 		this.postService.getDataStore()
 			.subscribe((data) => {
+			this.loading = data.loading;
+			console.log("Loading is", this.loading);
 			this.postItems = data.posts;
 		})
 

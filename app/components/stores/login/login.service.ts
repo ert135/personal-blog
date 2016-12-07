@@ -12,6 +12,7 @@ export interface ILoginData {
     loading: boolean;
     username: string,
     password: string,
+    error: string
 }
 
 export interface IRequiredLoginData {
@@ -39,6 +40,7 @@ export class LoginService {
          loading: boolean;
          username: string,
          password: string,
+         error: string
      }
 
      private apiUrl: string;
@@ -50,6 +52,7 @@ export class LoginService {
             loading: false,
             username: "",
             password: "",
+            error: ""
         } 
         this._loginDataStore = <BehaviorSubject<ILoginData>> new BehaviorSubject(this.getDefaultState());
         this._loginSuccess = <BehaviorSubject<ISuccessfulLoginResponse>> new BehaviorSubject({});
@@ -57,11 +60,12 @@ export class LoginService {
         this._closeForm = <BehaviorSubject<ILoginData>> new BehaviorSubject(this.getDefaultState());
      }
 
-     public getDefaultState(): ILoginData {
+     public getDefaultState() {
          return {
             loading: false,
             username: "",
-            password: ""
+            password: "",
+            error: ""
          }
      }
 
@@ -92,9 +96,11 @@ export class LoginService {
      }
 
      public closeForm(): void {
+         console.log("Closing")
          this._closeForm.next(null);
          this.LoginDataStore.username = "";
          this.LoginDataStore.password = "";
+         this.LoginDataStore.error = "";
          this._loginDataStore.next(Object.assign({}, this.LoginDataStore));
      }
 
@@ -121,6 +127,7 @@ export class LoginService {
                 this.errorResponse = JSON.parse(error._body);
                 this.error = this.errorResponse.error.message;
                 this.LoginDataStore.loading = false
+                this.LoginDataStore.error= this.error;
                 this._loginDataStore.next(Object.assign({}, this.LoginDataStore));
                 this._loginFail.next(this.error);
             }

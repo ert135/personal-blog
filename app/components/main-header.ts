@@ -18,20 +18,25 @@ import { SignedInUserService } from './stores/signedInUser/signedInUser.service'
                 <li class="main-header__link-item">
                     Posts
                 </li>
-                <li class="main-header__link-item">
-                    github
-                </li>
             </ul>
-            <div class="main-header__login-button"
-                (click)='openLoginWindow()'
-                *ngIf="!name">
-                Log In
-            </div>
-            <div class="main-header__login-button"
-                (click)='openLoginWindow()'
-                *ngIf="name"
-                [innerHTML]="name"
-                >
+            <div class="main-header__user-buttons-container">
+                <div class="main-header__login-button"
+                    (click)='openLoginWindow()'
+                    *ngIf="!name">
+                    Log In
+                </div>
+                <div class="main-header__name-label"
+                    (click)='openLoginWindow()'
+                    *ngIf="name"
+                    [innerHTML]="name"
+                    >
+                </div>
+                <div class="main-header__logout-button"
+                    (click)='logOut()'
+                    *ngIf="name"
+                    >
+                    Log Out
+                </div>
             </div>
         </div>
         <div loginmodalwrapper></div>
@@ -68,4 +73,8 @@ export class MainHeader {
                }
         })
 	}
+
+    logOut(){
+        this.SignedInUserService.logOut();
+    }
 }

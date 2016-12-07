@@ -24,6 +24,7 @@ export interface ISignedInUser {
 export class SignedInUserService {
 
      private successSubscription: Observable<LoginService>;
+     
      private LoginDataStore: {
          loading: boolean;
          username: string,
@@ -99,6 +100,11 @@ export class SignedInUserService {
 
      private getDecodedToken(): void {
         this.signedInUser = this.jwtHelper.decodeToken(this.token);
+     }
+
+     public logOut(): void {
+         this.deleteJwt();
+         //TODO IMPLIMENT BLACKLISTING TOKEN ON NODE SERVER, WE JSUT DELETE ON THE CLIENT FOR NOW
      }
 
 }

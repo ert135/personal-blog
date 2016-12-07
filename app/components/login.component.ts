@@ -12,8 +12,8 @@ import { LoginService } from './stores/login/login.service';
 @Component({
     selector: 'dlg',
     template: `
-    <div class="login-modal-container">
-        <div class="login-modal">
+    <div class="login-modal-container" [@loadingState]="loading == false">
+        <div class="login-modal" [@loadingState]="loading == false">
             <h1 class="login-modal__header">
                 Login
             </h1>
@@ -32,13 +32,16 @@ import { LoginService } from './stores/login/login.service';
                 <label class="login-modal__label">Password</label>
             </div>
 
+
             <input type="submit" class="login-modal__submit-button" (click)="submitDetails()" value="Submit" *ngIf="loading == false" [@loadingState]="loading == false">
-            <div class="login-modal__close-button" (click)="closeForm()">
-            </div>
-            <div class="login-modal__error-text" [innerHTML]="errorMessage" *ngIf="loading == false">
+
+            <div class="login-modal__close-button" (click)="closeForm()"></div>
+
+            <div class="login-modal__error-text" [innerHTML]="errorMessage" *ngIf="loading == false" [@loadingState]="error">
                 ERROR TEXt
             </div>
-            <footer *ngIf="loading == false">
+
+            <footer class="login-modal__forgot-password-footer" *ngIf="loading == false">
                 <a href="mailto:someone@example.com">Forgot password?</a>
             </footer>
             <div class="login-modal__loading-icon" *ngIf="loading == true" [@loadingState]="loading == true">
@@ -74,6 +77,7 @@ export class LoginModal {
 		this.loginService.getDataStore()
             .subscribe((data) => {
                 this.loading = data.loading;
+                this.errorMessage = data.error;
 		})
 
 		this.loginService.getCloseEvent()
@@ -84,7 +88,7 @@ export class LoginModal {
 
 		this.loginService.getFailEvent()
             .subscribe((data) => {
-			    this.errorMessage = data
+
 		})
 
         this.loginService.getSuccessEvent()
