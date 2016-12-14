@@ -5,7 +5,9 @@
     display:flex;
 
     &__aside{
-        flex-basis: 800px;
+        width:600px;
+        height:100vh;
+        position:fixed;
     }
 
     &__aside-image{
@@ -19,9 +21,10 @@
     }
 
     &__content{
-        flex-basis: 100%;;
+        margin-left:600px;
         background-color:white;
         padding:50px;
+        min-height:1000px;
     }
 
     &__title {
@@ -57,4 +60,72 @@
         letter-spacing: 1px;
         color: #666666;
     }
+
+    &__comments-header {
+        font-size:20px;
+        margin-top:2rem;
+        width:100%;
+        padding-bottom:1rem;
+        border-bottom:1px solid grey;
+    }
+
+    &__add-comments-button {
+        font-size: 25px;
+        margin-top:2rem;
+        text-align: center;
+        cursor: pointer;
+    }
+
+    &__comments-user-name {
+        font-size:25px;
+        color:#333;
+        margin-top:1px;
+    }
+
+    &__comments {
+
+    }
+
+    &__timestamp{
+        font-size:15px;
+        margin-top:1rem;
+    }
+
+    &__comment {
+        border-bottom: 1px solid #b9b9b9;
+        padding:2rem;
+        display:flex;
+    }
+
+    &__comment-text {
+        letter-spacing: 1px;
+        color: #666666;
+        font-size:18px;
+    }
+
+    &__comment-circle{
+        border-radius: 50%;
+        min-width: 100px;
+        height: 100px;
+        margin-right:3rem;
+        background-color: #333;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &__user-icon{
+        font-size:5rem;
+        color:white;
+    }
+
+    &__sign-in-message {
+        margin-top:2rem;
+        font-size: 25px;
+        margin-top:2rem;
+        text-align: center;
+        cursor: pointer;
+        padding-top:2rem;
+    }
+
 }

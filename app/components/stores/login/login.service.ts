@@ -134,4 +134,8 @@ export class LoginService {
         );
     }
 
+    public addComment(){
+        //TODO 
+    }
+
 }

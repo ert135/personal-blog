@@ -2,7 +2,7 @@ var express = require('express');
 var path = require('path');
 var app = express();
 var angularApp = "../index.html"
-var port = 4000;
+var port = 80;
 var path = require('path');
 
 app.get('/', function(req, res) {
@@ -26,7 +26,7 @@ app.get('*', function(req, res) {
     res.sendFile(path.resolve(__dirname + '/../app/index.html'));
 });
 
-app.listen(port, function() {
+app.listen(port,   function() {
     console.log('blog front end app listening on port', port);
     console.log(path.join(__dirname, '/../node_modules'));
     console.log(path.join(__dirname + '/../app/build'));

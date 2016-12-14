@@ -8,37 +8,50 @@ import {
     transition } from '@angular/core';
 
 import { LoginService } from './stores/login/login.service';
+import { LoginModel } from './models/login';
 
 @Component({
     selector: 'dlg',
     template: `
     <div class="login-modal-container" [@loadingState]="loading == false">
-        <div class="login-modal" [@loadingState]="loading == false">
-            <h1 class="login-modal__header">
-                Login
-            </h1>
-                
+    
+            <div class="login-modal" [@loadingState]="loading == false">
+                <h1 class="login-modal__header">
+                    Login
+                </h1>
+            <form>
+
+            <div class="login-modal__close-button" (click)="closeForm()">
+                <span class="glyphicon glyphicon-remove"></span>
+            </div>
+
             <div class="login-modal__input-group" *ngIf="loading == false" [@loadingState]="loading == false">      
-                <input class="login-modal__input" (keyup)="onEnterEmail($event.target.value)" type="text" required>
+                <input class="login-modal__input" 
+                    [ngModel]="username" 
+                    (ngModelChange)="onEnterEmail($event)"
+                    [ngModelOptions]="{standalone: true}"
+                >
                 <span class="highlight"></span>
                 <span class="bar"></span>
                 <label class="login-modal__label">Email</label>
             </div>
 
             <div class="login-modal__input-group" *ngIf="loading == false" [@loadingState]="loading == false">      
-                <input class="login-modal__input" (keyup)="onEnterPassword($event.target.value)" type="password" required>
+                <input class="login-modal__input" 
+                    [ngModel]="password" 
+                    (ngModelChange)="onEnterPassword($event)"
+                    [ngModelOptions]="{standalone: true}"
+                    type="password"
+                >
                 <span class="highlight"></span>
                 <span class="bar"></span>
                 <label class="login-modal__label">Password</label>
             </div>
 
-
-            <input type="submit" class="login-modal__submit-button" (click)="submitDetails()" value="Submit" *ngIf="loading == false" [@loadingState]="loading == false">
-
-            <div class="login-modal__close-button" (click)="closeForm()"></div>
+            <input type="submit" class="login-modal__submit-button" (click)="submitDetails()" value="Log In" *ngIf="loading == false" [@loadingState]="loading == false">
 
             <div class="login-modal__error-text" [innerHTML]="errorMessage" *ngIf="loading == false" [@loadingState]="error">
-                ERROR TEXt
+             
             </div>
 
             <footer class="login-modal__forgot-password-footer" *ngIf="loading == false">
@@ -47,6 +60,7 @@ import { LoginService } from './stores/login/login.service';
             <div class="login-modal__loading-icon" *ngIf="loading == true" [@loadingState]="loading == true">
                 <img class="main-loading-spinner" src="default.svg">
             </div>
+        </form>
         </div>
     </div>
     `,
@@ -66,11 +80,14 @@ export class LoginModal {
     	
     private loading: boolean;
     private errorMessage; string;
+    private username: string;
+    private password: string
 
 	constructor(
 		private loginService: LoginService
 	) {
-
+        this.username ="";
+        this.password ="";
 	}
 
     ngOnInit() {
@@ -78,6 +95,8 @@ export class LoginModal {
             .subscribe((data) => {
                 this.loading = data.loading;
                 this.errorMessage = data.error;
+                this.username = data.username;
+                this.password = data.password;
 		})
 
 		this.loginService.getCloseEvent()
@@ -109,6 +128,7 @@ export class LoginModal {
     }
 
     onEnterEmail(text: string){
+    console.log("Text is", text);
        this.loginService.updateUserName(text);
     }
 

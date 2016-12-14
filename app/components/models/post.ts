@@ -4,7 +4,7 @@ export class PostListItem {
         public id: number, 
         public postedBy: string, 
         public text:string,
-        public comments: string,
+        public comments: any[],
         public postedOn: string,
         public subtitle: string,
         public title: string,

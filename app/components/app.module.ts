@@ -4,6 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpModule } from '@angular/http';
 import { AUTH_PROVIDERS } from 'angular2-jwt';
+import { FormsModule }   from '@angular/forms';
 
 //components
 import { MainPage } from './main-page';
@@ -15,24 +16,24 @@ import { PostDetailComponent } from './post-detail.component';
 import { loginModalWrapper } from './modalDirective';
 import { LoginService } from './stores/login/login.service';
 import { SignedInUserService } from './stores/signedInUser/signedInUser.service';
+import { UserDetailComponent } from './user-detail.component';
 
-const appRoutes: Routes = [
-  { path: '', component: MainPage, pathMatch: 'full'  },
-  { path: 'post/:id', component: PostDetailComponent }
-  //wildcard route is **, make pagentofound component
-];
+//routing
+import { routing } from './routes/app.routing'
 
 @NgModule({
   providers: [
     AUTH_PROVIDERS,
     LoginService,
-    SignedInUserService
+    SignedInUserService,
+    MainPostService
   ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
     HttpModule,
-    RouterModule.forRoot(appRoutes)
+    routing,
+    FormsModule
   ],
   declarations: [ 
     AppComponent, 
@@ -41,6 +42,7 @@ const appRoutes: Routes = [
     PostDetailComponent,
     LoginModal,
     loginModalWrapper,
+    UserDetailComponent
   ],
   entryComponents: [
     LoginModal

@@ -8,7 +8,6 @@ import { SignedInUserService } from './stores/signedInUser/signedInUser.service'
 @Component({
     selector: 'main-header',
     template: `
-    
         <div class="main-header">
             <h1 class="main-header__title"> Robert Smith </h1>
             <ul class="main-header__links">
@@ -25,12 +24,13 @@ import { SignedInUserService } from './stores/signedInUser/signedInUser.service'
                     *ngIf="!name">
                     Log In
                 </div>
-                <div class="main-header__name-label"
-                    (click)='openLoginWindow()'
-                    *ngIf="name"
-                    [innerHTML]="name"
-                    >
-                </div>
+                <a [routerLink]="['/admin']">
+                    <div class="main-header__name-label"
+                        *ngIf="name"
+                        [innerHTML]="name"
+                        >
+                    </div>
+                </a>
                 <div class="main-header__logout-button"
                     (click)='logOut()'
                     *ngIf="name"
@@ -58,11 +58,10 @@ export class MainHeader {
     }
 
     @ViewChild(loginModalWrapper) dialogAnchor: loginModalWrapper;
-    openLoginWindow() {
+    public openLoginWindow() {
         //any used below to make the compiler behave itself
         //TODO make anhcor component generic to allow passing in any component to display
         this.dialogAnchor.createDialog(<any>LoginModal);
-
     }
 
     ngOnInit() {

@@ -34,16 +34,16 @@ export class SignedInUserService {
      private apiUrl: string;
      private token: string;
      private signedInUser: ISignedInUser;
-     private _SignedInUser: BehaviorSubject<ISignedInUser>;
+
 
     jwtHelper: JwtHelper = new JwtHelper();
+
+    _SignedInUser = <BehaviorSubject<ISignedInUser>> new BehaviorSubject<ISignedInUser>(this.getDefaultUser());
 
     constructor (
         private LoginService: LoginService
     ) {
         //check is token exists in local storage first, decode it and notify subscribers
-
-        this._SignedInUser = <BehaviorSubject<ISignedInUser>> new BehaviorSubject<ISignedInUser>(this.getDefaultUser());
 
         this.checkForTokenInLocalSotrage();
 

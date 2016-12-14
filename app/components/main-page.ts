@@ -63,6 +63,8 @@ export class MainPage {
 	) {
 		this.postItems = []
 	}
+
+	//TODO: Use interval timeout to check ifpage is still loading after 500ms
 	
 	ngOnInit() {
 		this.postService.loadAll();
@@ -70,8 +72,8 @@ export class MainPage {
 		this.postService.getDataStore()
 			.subscribe((data) => {
 			this.loading = data.loading;
-			console.log("Loading is", this.loading);
 			this.postItems = data.posts;
+			console.log("Main page data is", data);
 		})
 
 		//this.postSerivice.load('1');

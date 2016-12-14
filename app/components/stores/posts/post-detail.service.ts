@@ -13,53 +13,43 @@ import 'rxjs/add/operator/catch';
 export interface IPostData {
     posts: PostListItem[],
     loading: boolean,
-    error: string
+    error: string,
+    openEditor: boolean;
 }
 
 @Injectable()
-export class MainPostService {
+export class PostDetailService {
     
      posts: Observable<PostListItem[]>
-     
-     private _posts: BehaviorSubject<IPostData> = new BehaviorSubject(this.getDefaultState());
+     private _posts: BehaviorSubject<IPostData>;
 
      private postDataStore: {
          loading: boolean;
          posts: PostListItem[];
          error: string;
+         openEditor: boolean;
      }
 
      private apiUrl: string;
-     
 
      constructor (private http: Http) {
-         console.log("Created!!");
         this.setDefaultLoadingState();
         this.apiUrl = 'http://blog-robertblog.rhcloud.com';
         this.postDataStore = {
             posts: [],
             loading: true,
-            error: ""
+            error: "",
+            openEditor: false
         } 
+        this._posts = <BehaviorSubject<IPostData>> new BehaviorSubject(this.getDefaultState());
      }
 
      public getDefaultState(): IPostData {
          return {
-             posts: [{
-                 id: 0,
-                 postedBy: "",
-                 text: "",
-                 comments: [
-                     
-                 ],
-                 postedOn: "",
-                 subtitle: "",
-                 title: "",
-                 top: false,
-                 pictureUrl: ""
-             }],
+             posts: [],
              loading:true,
-             error: ""
+             error: "",
+             openEditor: false
          }
      }
 
@@ -67,29 +57,11 @@ export class MainPostService {
          return this._posts.asObservable();
      }
 
-     public loadAll() {
-        this.postDataStore.loading = true;
-        this.http.get(`${this.apiUrl}/posts`)
-            .map(response => response.json())
-            .subscribe(data => {
-                this.postDataStore.posts = data;
-                this.postDataStore.loading = false
-                this._posts.next(Object.assign({}, this.postDataStore));
-        }, 
-            error => {
-                let errorResponse = JSON.parse(error._body);
-                this.postDataStore = this.getDefaultState();
-                this.postDataStore.loading = false;
-                this.postDataStore.error = errorResponse.error.message;
-                this._posts.next(Object.assign({}, this.postDataStore));
-            }
-        );
-    }
-
     public loadPost(id: number) {
         this.http.get(`${this.apiUrl}/posts/${id}`)
             .map(response => response.json())
             .subscribe(data => {
+                console.log("Data is", data);
                 this.postDataStore.posts = data;
                 this.postDataStore.loading = false
                 this._posts.next(Object.assign({}, this.postDataStore));
@@ -108,7 +80,8 @@ export class MainPostService {
         return {
             posts: [],
             loading: true,
-            error: ""
+            error: "",
+            openEditor: false
         }
     }
 
