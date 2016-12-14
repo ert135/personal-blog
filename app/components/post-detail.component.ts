@@ -119,7 +119,7 @@ export class PostDetailComponent {
     }
 	
 	ngOnInit() {
-        console.log("NGONITIT CALLEDF!!!!!");
+
         this.route.params
         .map((paramaterValueArray) => paramaterValueArray['id'])
         .subscribe((id: number) => {
@@ -144,7 +144,7 @@ export class PostDetailComponent {
 	}
 
     ngOnDestroy(){
-        console.log("NGONDESTROY CALLED!!!");
+
     }
 	
 	onSubmit() {
