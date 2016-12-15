@@ -83,7 +83,7 @@
     }
 
     &__comments {
-
+        position: relative;
     }
 
     &__timestamp{
@@ -101,6 +101,7 @@
         letter-spacing: 1px;
         color: #666666;
         font-size:18px;
+        width:100%;
     }
 
     &__comment-circle{
@@ -126,6 +127,31 @@
         text-align: center;
         cursor: pointer;
         padding-top:2rem;
+    }
+
+    &__loading-spinner {
+        transition: all 200ms ease-in-out;
+        height:150px;
+        width:150px;
+    }
+
+    &__saving {
+        display:flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &__comment-delete {
+        position: absolute;
+        height:30px;
+        width:30px;
+        top:10px;
+        right:10px;
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        font-size:20px;
+        cursor: pointer;
     }
 
 }

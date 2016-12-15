@@ -73,7 +73,6 @@ export class MainPage {
 			.subscribe((data) => {
 			this.loading = data.loading;
 			this.postItems = data.posts;
-			console.log("Main page data is", data);
 		})
 
 		//this.postSerivice.load('1');

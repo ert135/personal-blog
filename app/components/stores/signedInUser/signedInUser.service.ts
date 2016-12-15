@@ -18,6 +18,8 @@ export interface ISignedInUser {
     id: string,
     exp: number,
     iat: number
+    admin: boolean;
+    type: string;
 }
 
 @Injectable()
@@ -71,7 +73,9 @@ export class SignedInUserService {
             email: null,
             id: null,
             exp: null,
-            iat: null
+            iat: null,
+            admin: false,
+            type: null
         }
     }
 
@@ -100,6 +104,10 @@ export class SignedInUserService {
 
      private getDecodedToken(): void {
         this.signedInUser = this.jwtHelper.decodeToken(this.token);
+        console.log("Signedin user is", this.signedInUser);
+        this.signedInUser.token = localStorage.getItem('id_token');
+        //temp method untill node model gets updated
+        console.log("Token is", localStorage.getItem('id_token'));
      }
 
      public logOut(): void {

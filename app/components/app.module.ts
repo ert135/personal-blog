@@ -10,30 +10,39 @@ import { FormsModule }   from '@angular/forms';
 import { MainPage } from './main-page';
 import { AppComponent }   from './app.component';
 import { MainHeader } from './main-header';
-import { MainPostService } from './stores/posts/mainPost.service';
 import { LoginModal } from './login.component';
 import { PostDetailComponent } from './post-detail.component';
 import { loginModalWrapper } from './modalDirective';
 import { LoginService } from './stores/login/login.service';
 import { SignedInUserService } from './stores/signedInUser/signedInUser.service';
 import { UserDetailComponent } from './user-detail.component';
+import { Editor } from './editor.component';
+
+//services
+import { PostDetailService } from './stores/posts/post-detail.service';
+import { MainPostService } from './stores/posts/mainPost.service';
 
 //routing
 import { routing } from './routes/app.routing'
+
+//external librarys
+import { CKEditorModule } from 'ng2-ckeditor';
 
 @NgModule({
   providers: [
     AUTH_PROVIDERS,
     LoginService,
     SignedInUserService,
-    MainPostService
+    MainPostService,
+    PostDetailService
   ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
     HttpModule,
     routing,
-    FormsModule
+    FormsModule,
+    CKEditorModule
   ],
   declarations: [ 
     AppComponent, 
@@ -42,7 +51,8 @@ import { routing } from './routes/app.routing'
     PostDetailComponent,
     LoginModal,
     loginModalWrapper,
-    UserDetailComponent
+    UserDetailComponent,
+    Editor
   ],
   entryComponents: [
     LoginModal

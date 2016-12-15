@@ -5,6 +5,7 @@
     "node": "registry:env/node#6.0.0+20160723033700"
   },
   "globalDependencies": {
+    "ckeditor": "registry:dt/ckeditor#0.0.0+20161128184045",
     "node": "registry:env/node#6.0.0+20160723033700"
   }
 }
