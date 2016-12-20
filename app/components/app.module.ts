@@ -57,7 +57,8 @@ import { CKEditorModule } from 'ng2-ckeditor';
     PostDetailComponent,
     LoginModal,
     loginModalWrapper,
-    UserDetailComponent
+    UserDetailComponent,
+    Editor
   ],
   entryComponents: [
     LoginModal

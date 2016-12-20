@@ -10,7 +10,6 @@ import { FormsModule }   from '@angular/forms';
 //components
 import { MainHeader } from '../main-header';
 import { LoginModal } from '../login.component';
-import { Editor } from '../editor.component';
 import { AdminComponent } from './admin.component';
 
 //routing
@@ -35,7 +34,6 @@ import { CKEditorModule } from 'ng2-ckeditor';
     CKEditorModule
   ],
   declarations: [ 
-    Editor,
     AdminComponent
   ],
   entryComponents: [
