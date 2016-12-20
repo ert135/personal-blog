@@ -1,3 +1,4 @@
+//Modules
 import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -5,6 +6,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HttpModule } from '@angular/http';
 import { AUTH_PROVIDERS } from 'angular2-jwt';
 import { FormsModule }   from '@angular/forms';
+import { AdminModule }   from './admin/admin.module';
 
 //components
 import { MainPage } from './main-page';
@@ -25,7 +27,7 @@ import { MainPostService } from './stores/posts/mainPost.service';
 //routing
 import { routing } from './routes/app.routing'
 
-//external librarys
+//external libraries
 import { CKEditorModule } from 'ng2-ckeditor';
 
 @NgModule({
@@ -42,7 +44,11 @@ import { CKEditorModule } from 'ng2-ckeditor';
     HttpModule,
     routing,
     FormsModule,
-    CKEditorModule
+    CKEditorModule,
+    AdminModule
+  ],
+  exports: [
+     MainHeader
   ],
   declarations: [ 
     AppComponent, 
@@ -51,8 +57,7 @@ import { CKEditorModule } from 'ng2-ckeditor';
     PostDetailComponent,
     LoginModal,
     loginModalWrapper,
-    UserDetailComponent,
-    Editor
+    UserDetailComponent
   ],
   entryComponents: [
     LoginModal

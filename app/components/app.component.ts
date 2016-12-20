@@ -6,7 +6,6 @@ import { loginModalWrapper } from './modalDirective';
 
 @Component({
   selector: 'my-app',
-  template: '<main-header></main-header> <router-outlet></router-outlet>',
-  entryComponents: [LoginModal]
+  template: '<main-header></main-header> <router-outlet></router-outlet>'
 })
 export class AppComponent { }

@@ -1,14 +1,14 @@
 import { Component, ViewChild, NgModule } from '@angular/core';
 import { ViewContainerRef } from '@angular/core';
-import { MainPostService } from './stores/posts/mainPost.service'
+import { MainPostService } from '../stores/posts/mainPost.service'
 import { Observable } from 'rxjs/Rx';
 import { BehaviorSubject } from 'rxjs/Rx';
-import { PostListItem } from './models/post';
-import { SignedInUserService } from './stores/signedInUser/signedInUser.service';
+import { PostListItem } from '../models/post';
+import { SignedInUserService } from '../stores/signedInUser/signedInUser.service';
 import { FormBuilder, Validators} from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { MainHeader } from './main-header';
-import { loginModalWrapper } from './modalDirective';
+import { MainHeader } from '../main-header';
+import { loginModalWrapper } from '../modalDirective';
 import { 
 	animate, 
     trigger, 
@@ -21,7 +21,7 @@ import {
     template: `
         <div class="no-gutter detail-page-container" [@loadingState]="loading == false">
             <h1 class="post-detail__title">
-                User detail component
+                Admin Component
             </h1>
         </div>
     `,
@@ -38,7 +38,7 @@ import {
     ],
     host: {'class' : 'page1Container'}
 })
-export class UserDetailComponent {
+export class AdminComponent {
 	posts: Observable<PostListItem[]>;
 	singlePost$: Observable<PostListItem>;
 	post: any;
@@ -61,6 +61,7 @@ export class UserDetailComponent {
             .subscribe((data: any) => {
                if(data){
                    this.user = data
+                   console.log("Data from user service is currently", data);
                }
         })
 	}

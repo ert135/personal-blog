@@ -14,6 +14,5 @@ import { UserDetailComponent } from '../user-detail.component';
 export const routing = RouterModule.forRoot([
   { path: '', component: MainPage, pathMatch: 'full' },
   { path: 'post/:id', component: PostDetailComponent },
-  { path: 'admin', component: UserDetailComponent },
-  { path: '**', component: PostDetailComponent },
+  { path: '**', component: MainPage },
 ])
