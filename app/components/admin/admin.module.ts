@@ -1,5 +1,4 @@
-//Moduels
-//import { AppModule }     from '../app.module';
+//Modules
 import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -17,11 +16,15 @@ import { AdminComponent } from './admin.component';
 //routing
 import { AdminRoutes } from './admin.routes'
 
+//route guards
+import { AdminPageGuard } from './admin.guard'
+
 //external libraries
 import { CKEditorModule } from 'ng2-ckeditor';
 
 @NgModule({
   providers: [
+    AdminPageGuard
   ],
   imports: [
     BrowserModule,

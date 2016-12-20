@@ -66,6 +66,13 @@ export class SignedInUserService {
 
     }
 
+    private isTokenExpired(): void {
+        console.log("Token expired?", this.jwtHelper.isTokenExpired(this.token));
+         if(this.jwtHelper.isTokenExpired(this.token)) {
+             this.deleteJwt();
+         }
+    }
+
     private getDefaultUser(): ISignedInUser {
         return {
             name: null,
@@ -83,6 +90,7 @@ export class SignedInUserService {
         this.token = localStorage.getItem('id_token');
         if(this.token){
             this.getDecodedToken();
+            this.isTokenExpired();
             this._SignedInUser.next(Object.assign({}, this.signedInUser));
         }
     }
@@ -99,19 +107,20 @@ export class SignedInUserService {
      private deleteJwt() {;
         localStorage.removeItem('id_token');
         this.token = localStorage.getItem('id_token');
-        this._SignedInUser.next(Object.assign({}, this.getDefaultUser()));
+        this.signedInUser = this.getDefaultUser();
     }
 
      private getDecodedToken(): void {
         this.signedInUser = this.jwtHelper.decodeToken(this.token);
         console.log("Signedin user is", this.signedInUser);
         this.signedInUser.token = localStorage.getItem('id_token');
-        //temp method untill node model gets updated
+        //ifd_token is default name that angular-2-jwt library looks to get a token from localstorage
         console.log("Token is", localStorage.getItem('id_token'));
      }
 
      public logOut(): void {
          this.deleteJwt();
+         this._SignedInUser.next(Object.assign({}, this.signedInUser));
          //TODO IMPLIMENT BLACKLISTING TOKEN ON NODE SERVER, WE JSUT DELETE ON THE CLIENT FOR NOW
      }
 

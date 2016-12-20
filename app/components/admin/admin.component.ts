@@ -20,9 +20,14 @@ import {
     selector: 'user-detail',
     template: `
         <div class="no-gutter detail-page-container" [@loadingState]="loading == false">
-            <h1 class="post-detail__title">
+            <h1 class="admin-page__title">
                 Admin Component
             </h1>
+            <div class="admin-page__content">
+                <form>
+                   Admin Form goes here!!!
+                </form>
+            </div>
         </div>
     `,
     animations: [
