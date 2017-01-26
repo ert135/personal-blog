@@ -47,7 +47,7 @@ import { LoginModal } from './login.component';
                         </h2>
                     </div>
                     <div class="post-detail__post-body">
-                        {{post.postBody}}
+                        <div [innerHTML]="post.postBody"></div>
                     </div>
                     <div class="post-detail__comments">
                         <div class="post-detail__comments-header">

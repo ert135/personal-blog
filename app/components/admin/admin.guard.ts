@@ -17,7 +17,6 @@ export class AdminPageGuard implements CanActivate {
         .subscribe((data: any) => {
             if(data){
                 this.user = data;
-                console.log("Guard has", this.user);
             }
     })
   }

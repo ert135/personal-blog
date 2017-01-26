@@ -31,7 +31,11 @@ import {
 							<h2>{{post.title}}</h2>
 							<div class="comment-count">{{post.comments}} Comments <i class="fa fa-comments-o"></i> </div>
 							<div class="excerpt">{{post.subtitle}} </div>
-							<div class="postinfo"><span>{{post.postedOn}}</span> </div>
+							<div class="postinfo">
+								<span>
+									{{post.postedOn}}
+								</span> 
+							</div>
 						</div>
 					</div>
 				</figure>

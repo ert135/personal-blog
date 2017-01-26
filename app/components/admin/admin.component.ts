@@ -26,6 +26,7 @@ import {
             <div class="admin-page__content">
                 <form>
                    Admin Form goes here!!!
+                   <htmleditor></htmleditor>
                 </form>
             </div>
         </div>
@@ -38,6 +39,8 @@ import {
             ]),
             transition(':leave', [  
                 animate(300, style({opacity:0})) 
+
+                
             ])
         ])
     ],

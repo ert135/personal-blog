@@ -11,6 +11,7 @@ import { FormsModule }   from '@angular/forms';
 import { MainHeader } from '../main-header';
 import { LoginModal } from '../login.component';
 import { AdminComponent } from './admin.component';
+import { HtmlEditor } from './admin.editor';
 
 //routing
 import { AdminRoutes } from './admin.routes'
@@ -34,7 +35,8 @@ import { CKEditorModule } from 'ng2-ckeditor';
     CKEditorModule
   ],
   declarations: [ 
-    AdminComponent
+    AdminComponent,
+    HtmlEditor
   ],
   entryComponents: [
     LoginModal

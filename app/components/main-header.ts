@@ -9,7 +9,7 @@ import { SignedInUserService } from './stores/signedInUser/signedInUser.service'
     selector: 'main-header',
     template: `
         <div class="main-header">
-            <h1 class="main-header__title"> Robert Smith </h1>
+            <h1 class="main-header__title" [routerLink]="['/']"> Robert Smith </h1>
             <ul class="main-header__links">
                 <li class="main-header__link-item">
                     Projects
@@ -24,13 +24,13 @@ import { SignedInUserService } from './stores/signedInUser/signedInUser.service'
                     *ngIf="!name">
                     Log In
                 </div>
-                <a [routerLink]="['/admin']">
+                <div [routerLink]="['/admin']">
                     <div class="main-header__name-label"
                         *ngIf="name"
                         [innerHTML]="name"
                         >
                     </div>
-                </a>
+                </div>
                 <div class="main-header__logout-button"
                     (click)='logOut()'
                     *ngIf="name"
@@ -71,6 +71,10 @@ export class MainHeader {
                    this.name = data.name;
                }
         })
+	}
+
+    goToMainPage() {
+
 	}
 
     logOut(){
