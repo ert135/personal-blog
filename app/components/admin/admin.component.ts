@@ -27,9 +27,6 @@ import {
                     </h1>
                     <div class="admin-page__content">
                         <form>
-                            <h2 class="admin-page__sub-title">
-                                New Post
-                            </h2>
                             <div class="login-modal__input-group">      
                                 <input class="login-modal__input" 
                                     [ngModel]="username" 
@@ -38,7 +35,7 @@ import {
                                 >
                                 <span class="highlight"></span>
                                 <span class="bar"></span>
-                                <label class="login-modal__label">Email</label>
+                                <label class="login-modal__label">Title</label>
                             </div>
                         </form>
                     </div>
