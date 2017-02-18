@@ -20,14 +20,29 @@ import {
     selector: 'user-detail',
     template: `
         <div class="no-gutter detail-page-container" [@loadingState]="loading == false">
-            <h1 class="admin-page__title">
-                Admin Component
-            </h1>
-            <div class="admin-page__content">
-                <form>
-                   Admin Form goes here!!!
-                   <htmleditor></htmleditor>
-                </form>
+            <div class="admin-page">
+                <div class="admin-page__section">
+                    <h1 class="admin-page__title">
+                        New Post
+                    </h1>
+                    <div class="admin-page__content">
+                        <form>
+                            <h2 class="admin-page__sub-title">
+                                New Post
+                            </h2>
+                            <div class="login-modal__input-group">      
+                                <input class="login-modal__input" 
+                                    [ngModel]="username" 
+                                    (ngModelChange)="onEnterEmail($event)"
+                                    [ngModelOptions]="{standalone: true}"
+                                >
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <label class="login-modal__label">Email</label>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     `,
@@ -62,6 +77,12 @@ export class AdminComponent {
         this.error = null;
 	}
 
+            //<htmleditor></htmleditor>
+        //         req.body.title && 
+        // req.body.pictureUrl &&
+        // req.body.postedBy &&
+        // req.body.postBody &&
+        // req.body.subtitle 
 
     @ViewChild(loginModalWrapper) dialogAnchor: loginModalWrapper;
 	ngOnInit() {
