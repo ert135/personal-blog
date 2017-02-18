@@ -48,8 +48,20 @@ export class SignedInUserService {
         //check is token exists in local storage first, decode it and notify subscribers
 
         this.checkForTokenInLocalSotrage();
+        this.initGetLoginSuccessSubscription();
+        this.initLoginFailSubscription();
+    }
 
-        LoginService.getSuccessEvent()
+    private initLoginFailSubscription(){
+        this.LoginService.getFailEvent()
+            .skip(1)
+            .subscribe((data) => {
+                this.deleteJwt();
+        });
+    }
+
+    private initGetLoginSuccessSubscription(){
+        this.LoginService.getSuccessEvent()
             .subscribe((data) => {
                 if(data.token){
                     this.setToken(data.token);
@@ -57,17 +69,9 @@ export class SignedInUserService {
                     this._SignedInUser.next(this.signedInUser);
                 }
         });
-
-        LoginService.getFailEvent()
-            .skip(1)
-            .subscribe((data) => {
-                this.deleteJwt();
-        });
-
     }
 
     private isTokenExpired(): void {
-        console.log("Token expired?", this.jwtHelper.isTokenExpired(this.token));
          if(this.jwtHelper.isTokenExpired(this.token)) {
              this.deleteJwt();
          }

@@ -96,7 +96,6 @@ export class LoginService {
      }
 
      public closeForm(): void {
-         console.log("Closing")
          this._closeForm.next(null);
          this.LoginDataStore.username = "";
          this.LoginDataStore.password = "";

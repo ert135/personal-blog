@@ -28,7 +28,7 @@ export class HtmlEditor {
 
 
     constructor(){
-    this.ckeditorContent = `<p>My HTML</p>`;
+    this.ckeditorContent = `<p></p>`;
     }
 
     private onChange(event) {

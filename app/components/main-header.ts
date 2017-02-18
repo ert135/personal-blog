@@ -24,7 +24,9 @@ import { SignedInUserService } from './stores/signedInUser/signedInUser.service'
                     *ngIf="!name">
                     Log In
                 </div>
-                <div [routerLink]="['/admin']">
+                <div class="main-header__user-dropdown"
+                     [routerLink]="['/admin']"
+                >
                     <div class="main-header__name-label"
                         *ngIf="name"
                         [innerHTML]="name"

@@ -17,8 +17,8 @@ import {
 	providers: [MainPostService],
     template: `
 	<div class="no-gutter main-page-container" *ngIf="loading == false" [@loadingState]="loading == false">
-		<div class="col-md-6" *ngFor='let post of postItems'>
-			<a [routerLink]="['/post', post.id]">
+		<div class="col-md-6 main-post" *ngFor='let post of postItems'>
+			<a class="no-decoration" [routerLink]="['/post', post.id]">
 				<figure [ngStyle]="{ 'background-image': 'url(' + post.pictureUrl + ')'}"
 						class="callpost" 
 						data-num="1"
