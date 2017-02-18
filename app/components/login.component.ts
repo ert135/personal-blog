@@ -107,7 +107,7 @@ export class LoginModal {
 
 		this.loginService.getFailEvent()
             .subscribe((data) => {
-
+                console.log("called fail event!!!!!");
 		})
 
         this.loginService.getSuccessEvent()

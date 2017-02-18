@@ -145,6 +145,7 @@ export class PostDetailService {
                 this._posts.next(Object.assign({}, this.postDataStore));
         }, 
             error => {
+                //TODO CREATE ERROR EVENT
                 console.log("Error is", error);
             }
         );

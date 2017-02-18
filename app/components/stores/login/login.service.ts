@@ -3,6 +3,7 @@ import { Injectable }     from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { BehaviorSubject } from 'rxjs/Rx';
+import { LoginEvents } from '../../events/login.events';
 
 // Import RxJs required methods
 import 'rxjs/add/operator/map';
@@ -45,7 +46,11 @@ export class LoginService {
 
      private apiUrl: string;
 
-     constructor (private http: Http) {
+     constructor (
+         private http: Http,
+         private LoginEvents: LoginEvents
+     ) {
+         console.log("LoginEvents is", LoginEvents)
         this.error =  "";
         this.apiUrl = 'http://blog-robertblog.rhcloud.com';
         this.LoginDataStore = {

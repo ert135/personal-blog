@@ -27,6 +27,9 @@ import { MainPostService } from './stores/posts/mainPost.service';
 //routing
 import { routing } from './routes/app.routing'
 
+//Events
+import { EventsModule } from './events/events.module'
+
 //external libraries
 import { CKEditorModule } from 'ng2-ckeditor';
 
@@ -45,7 +48,8 @@ import { CKEditorModule } from 'ng2-ckeditor';
     routing,
     FormsModule,
     CKEditorModule,
-    AdminModule
+    AdminModule,
+    EventsModule.forRoot()
   ],
   exports: [
      MainHeader

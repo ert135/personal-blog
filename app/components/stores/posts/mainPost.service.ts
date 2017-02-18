@@ -33,7 +33,6 @@ export class MainPostService {
      
 
      constructor (private http: Http) {
-         console.log("Created!!");
         this.setDefaultLoadingState();
         this.apiUrl = 'http://blog-robertblog.rhcloud.com';
         this.postDataStore = {
