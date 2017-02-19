@@ -88,28 +88,27 @@ export class LoginModal {
 		private loginService: LoginService,
         private LoginEvents: LoginEvents
 	) {
-        this.username ="";
-        this.password ="";
-	}
+        
+    }
 
     ngOnInit() {
-		this.loginService.getDataStore()
+        this.loginService.getDataStore()
             .subscribe((data) => {
                 this.loading = data.loading;
                 this.errorMessage = data.error;
                 this.username = data.username;
                 this.password = data.password;
-		})
+        })
 
         this.LoginEvents.closeForm
             .subscribe((data) => {
                 this.onClickedExit();
-		})
+        })
 
         this.LoginEvents.loginSuccess
             .subscribe((data) => {
                 this.onClickedExit();
-		})
+        })
 
 	}
 
@@ -124,21 +123,16 @@ export class LoginModal {
     }
 
     onEnterEmail(text: string){
-        console.log("email text is", text);
         this.LoginEvents.changeEmail.next(text);
     }
 
     onEnterPassword(text: string){
-        console.log("New password is", text);
         this.LoginEvents.changePassword.next(text);
     }
 
     submitDetails(): void {
-        console.log("username: ", this.username);
-        console.log("passowrd", this.password);
         let username1 = this.username;
         let password2 = this.password
-        console.log(this);
         this.LoginEvents.login.next({
             username: username1,
             password: password2

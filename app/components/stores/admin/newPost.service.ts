@@ -3,7 +3,7 @@ import { Injectable }     from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { BehaviorSubject } from 'rxjs/Rx';
-import { LoginEvents } from '../../events/login.events';
+import { CreatePostEvents } from '../../events/createPost.events';
 
 // Import RxJs required methods
 import 'rxjs/add/operator/map';
@@ -19,34 +19,33 @@ export interface INewPostDataStore {
 export class NewPostService {
     
      private _newPostDataStore: BehaviorSubject<INewPostDataStore>;
-
      private error: string;
      private errorResponse: any;
      private newPostDataStore: INewPostDataStore;
-
      private apiUrl: string;
 
      constructor (
          private http: Http,
-         private LoginEvents: LoginEvents
+         private CreatePostEvents: CreatePostEvents
      ) {
         this.error =  "";
         this.apiUrl = 'http://blog-robertblog.rhcloud.com';
         this.newPostDataStore = this.getDefaultState();
         this._newPostDataStore = <BehaviorSubject<INewPostDataStore>> new BehaviorSubject(this.getDefaultState());
         this.setupTypeTitleSubscription();
+        this.setupTypePictureUrlSubscription();
      }
 
      private setupTypeTitleSubscription() {
-        this.LoginEvents.login.subscribe((data) => {
-            this.newPostDataStore.saving = true;
+        this.CreatePostEvents.changeTitle.subscribe((data: string) => {
+            this.newPostDataStore.title = data;
             this._newPostDataStore.next(this.newPostDataStore);
         })
      }
 
-    private setupLoginSuccessSubscription() {
-        this.LoginEvents.login.subscribe((data) => {
-            this.newPostDataStore.saving = true;
+    private setupTypePictureUrlSubscription() {
+        this.CreatePostEvents.changePictureUrl.subscribe((data: string) => {
+            this.newPostDataStore.pictureUrl = data;
             this._newPostDataStore.next(this.newPostDataStore);
         })
      }

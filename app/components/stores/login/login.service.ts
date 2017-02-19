@@ -64,44 +64,53 @@ export class LoginService {
         this.setupCloseFormSubscription();
         this.setupChangePasswordSubscription();
         this.setupChangeEmailSubscription();
+        this.setupLoginFailSubscription();
      }
 
-     public setupLoginAttemptSubscription(){
+     private setupLoginAttemptSubscription(){
         this.LoginEvents.login.subscribe((data) => {
             this.LoginDataStore.loading = true;
             this._loginDataStore.next(this.LoginDataStore);
         })
      }
 
-    public setupChangePasswordSubscription(){
+    private setupChangePasswordSubscription(){
         this.LoginEvents.changePassword.subscribe((data) => {
             this.LoginDataStore.password = data;
             this._loginDataStore.next(this.LoginDataStore);
         })
      }
 
-    public setupChangeEmailSubscription(){
+    private setupChangeEmailSubscription(){
         this.LoginEvents.changeEmail.subscribe((data) => {
             this.LoginDataStore.username = data;
             this._loginDataStore.next(this.LoginDataStore);
         })
      }
 
-     public setupLoginSuccessSubscription(){
+     private setupLoginSuccessSubscription(){
         this.LoginEvents.loginSuccess.subscribe((data) => {
             this.LoginDataStore.loading = false;
             this._loginDataStore.next(this.LoginDataStore);
         })
      }
 
-    public setupCloseFormSubscription(){
+    private setupCloseFormSubscription(){
         this.LoginEvents.closeForm.subscribe((data) => {
             this.LoginDataStore = this.getDefaultState();
             this._loginDataStore.next(this.LoginDataStore);
         })
      }
 
-     public getDefaultState() {
+     private setupLoginFailSubscription() {
+        this.LoginEvents.loginFail.subscribe((data) => {
+            this.LoginDataStore.error = data;
+            this.LoginDataStore.loading = false;
+            this._loginDataStore.next(this.LoginDataStore);
+        })
+     }
+
+     private getDefaultState() {
          return {
             loading: false,
             username: "",

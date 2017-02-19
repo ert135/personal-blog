@@ -23,6 +23,7 @@ import { Editor } from './editor.component';
 //services
 import { PostDetailService } from './stores/posts/post-detail.service';
 import { MainPostService } from './stores/posts/mainPost.service';
+import { NewPostService } from './stores/admin/newPost.service';
 
 //routing
 import { routing } from './routes/app.routing'
@@ -39,7 +40,8 @@ import { CKEditorModule } from 'ng2-ckeditor';
     LoginService,
     SignedInUserService,
     MainPostService,
-    PostDetailService
+    PostDetailService,
+    NewPostService
   ],
   imports: [
     BrowserModule,
