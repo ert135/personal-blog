@@ -6,6 +6,7 @@ import { BehaviorSubject } from 'rxjs/Rx';
 import { ReplaySubject } from 'rxjs/Rx';
 import { LoginService } from '../login/login.service';
 import { JwtHelper } from 'angular2-jwt';
+import { LoginEvents } from "../../events/login.events"
 
 // Import RxJs required methods
 import 'rxjs/add/operator/map';
@@ -43,32 +44,33 @@ export class SignedInUserService {
     _SignedInUser = <BehaviorSubject<ISignedInUser>> new BehaviorSubject<ISignedInUser>(this.getDefaultUser());
 
     constructor (
-        private LoginService: LoginService
+        private LoginService: LoginService,
+        private LoginEvents: LoginEvents
     ) {
         //check is token exists in local storage first, decode it and notify subscribers
 
         this.checkForTokenInLocalSotrage();
         this.initGetLoginSuccessSubscription();
         this.initLoginFailSubscription();
+        this.initLogoutSubscription()
+    }
+
+    private initLogoutSubscription(){
+        this.LoginEvents.logOut.subscribe(() => {
+            this.logOut();
+        })
     }
 
     private initLoginFailSubscription(){
-        this.LoginService.getFailEvent()
-            .skip(1)
-            .subscribe((data) => {
-                this.deleteJwt();
-        });
+
     }
 
     private initGetLoginSuccessSubscription(){
-        this.LoginService.getSuccessEvent()
-            .subscribe((data) => {
-                if(data.token){
-                    this.setToken(data.token);
-                    this.getDecodedToken();
-                    this._SignedInUser.next(this.signedInUser);
-                }
-        });
+        this.LoginEvents.loginSuccess.subscribe((data) => {
+            this.signedInUser = this.jwtHelper.decodeToken(data.token);
+            this.setToken(data.token);
+            this._SignedInUser.next(Object.assign({}, this.signedInUser));
+        })
     }
 
     private isTokenExpired(): void {
@@ -124,7 +126,9 @@ export class SignedInUserService {
 
      public logOut(): void {
          this.deleteJwt();
+         this.signedInUser = this.getDefaultUser();
          this._SignedInUser.next(Object.assign({}, this.signedInUser));
+         console.log("Logging out!!!", this.signedInUser);
          //TODO IMPLIMENT BLACKLISTING TOKEN ON NODE SERVER, WE JSUT DELETE ON THE CLIENT FOR NOW
      }
 

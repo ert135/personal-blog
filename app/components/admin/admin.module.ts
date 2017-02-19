@@ -22,6 +22,8 @@ import { AdminPageGuard } from './admin.guard'
 //external libraries
 import { CKEditorModule } from 'ng2-ckeditor';
 
+import { EventsModule} from "../events/events.module"
+
 @NgModule({
   providers: [
     AdminPageGuard
@@ -32,7 +34,8 @@ import { CKEditorModule } from 'ng2-ckeditor';
     HttpModule,
     AdminRoutes,
     FormsModule,
-    CKEditorModule
+    CKEditorModule,
+    EventsModule
   ],
   declarations: [ 
     AdminComponent,

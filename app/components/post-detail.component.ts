@@ -111,8 +111,10 @@ import { LoginModal } from './login.component';
 export class PostDetailComponent {
 	posts: Observable<PostListItem[]>;
 	singlePost$: Observable<PostListItem>;
-    //typings donmt have the unsubscribe method
+
+    //typings dont have the unsubscribe method - so using any for subs
     userSubscription: any;
+
 	postObservable: any;
     loading: boolean;
     private error: string;
@@ -148,7 +150,6 @@ export class PostDetailComponent {
                 this.editMode = data.openEditor;
                 this.comment = data.commentText;
                 this.savingComment = data.savingComment;
-                console.log("Data is", data.savingComment);
 		})
 
         this.route.params
@@ -161,7 +162,6 @@ export class PostDetailComponent {
             .subscribe((data: any) => {
                if(data){
                    this.user = data;
-                   console.log("this.user is", this.user);
                }
         })
 	}

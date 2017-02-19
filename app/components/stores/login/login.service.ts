@@ -50,7 +50,6 @@ export class LoginService {
          private http: Http,
          private LoginEvents: LoginEvents
      ) {
-         console.log("LoginEvents is", LoginEvents)
         this.error =  "";
         this.apiUrl = 'http://blog-robertblog.rhcloud.com';
         this.LoginDataStore = {
@@ -60,9 +59,46 @@ export class LoginService {
             error: ""
         } 
         this._loginDataStore = <BehaviorSubject<ILoginData>> new BehaviorSubject(this.getDefaultState());
-        this._loginSuccess = <BehaviorSubject<ISuccessfulLoginResponse>> new BehaviorSubject({});
-        this._loginFail = <BehaviorSubject<string>> new BehaviorSubject("");
-        this._closeForm = <BehaviorSubject<ILoginData>> new BehaviorSubject(this.getDefaultState());
+        this.setupLoginSuccessSubscription();
+        this.setupLoginAttemptSubscription();
+        this.setupCloseFormSubscription();
+        this.setupChangePasswordSubscription();
+        this.setupChangeEmailSubscription();
+     }
+
+     public setupLoginAttemptSubscription(){
+        this.LoginEvents.login.subscribe((data) => {
+            this.LoginDataStore.loading = true;
+            this._loginDataStore.next(this.LoginDataStore);
+        })
+     }
+
+    public setupChangePasswordSubscription(){
+        this.LoginEvents.changePassword.subscribe((data) => {
+            this.LoginDataStore.password = data;
+            this._loginDataStore.next(this.LoginDataStore);
+        })
+     }
+
+    public setupChangeEmailSubscription(){
+        this.LoginEvents.changeEmail.subscribe((data) => {
+            this.LoginDataStore.username = data;
+            this._loginDataStore.next(this.LoginDataStore);
+        })
+     }
+
+     public setupLoginSuccessSubscription(){
+        this.LoginEvents.loginSuccess.subscribe((data) => {
+            this.LoginDataStore.loading = false;
+            this._loginDataStore.next(this.LoginDataStore);
+        })
+     }
+
+    public setupCloseFormSubscription(){
+        this.LoginEvents.closeForm.subscribe((data) => {
+            this.LoginDataStore = this.getDefaultState();
+            this._loginDataStore.next(this.LoginDataStore);
+        })
      }
 
      public getDefaultState() {
@@ -78,68 +114,5 @@ export class LoginService {
          return this._loginDataStore.asObservable();
      }
 
-     public getSuccessEvent() {
-         return this._loginSuccess.asObservable();
-     }
-
-    public getFailEvent() {
-         return this._loginFail.asObservable();
-     }
-
-     public getCloseEvent() {
-         return this._closeForm.asObservable();
-     }
-
-     public updateUserName(nameUpdate: string) {
-         this.LoginDataStore.username = nameUpdate;
-         this._loginDataStore.next(Object.assign({}, this.LoginDataStore));
-     }
-     
-     public updatePassword(passwordUpdate: string) {
-         this.LoginDataStore.password = passwordUpdate;
-         this._loginDataStore.next(Object.assign({}, this.LoginDataStore));
-     }
-
-     public closeForm(): void {
-         this._closeForm.next(null);
-         this.LoginDataStore.username = "";
-         this.LoginDataStore.password = "";
-         this.LoginDataStore.error = "";
-         this._loginDataStore.next(Object.assign({}, this.LoginDataStore));
-     }
-
-     public sendLoginRequest() {
-        let headers = new Headers({ 'Content-Type': 'application/json' });
-        let options = new RequestOptions({ headers: headers });
-        let data = JSON.stringify({
-            email: this.LoginDataStore.username,
-            password: this.LoginDataStore.password
-        });
-        this.LoginDataStore.loading = true;
-        this._loginDataStore.next(Object.assign({}, this.LoginDataStore));
-
-        this.http.post(`${this.apiUrl}/auth`, data
-        , options)
-            .map(response => response.json())
-            .subscribe(data   => {
-                this.LoginDataStore.loading = false
-                this.error = "";
-                this._loginDataStore.next(Object.assign({}, this.LoginDataStore));
-                this._loginSuccess.next(data);
-        }, 
-            error => {
-                this.errorResponse = JSON.parse(error._body);
-                this.error = this.errorResponse.error.message;
-                this.LoginDataStore.loading = false
-                this.LoginDataStore.error= this.error;
-                this._loginDataStore.next(Object.assign({}, this.LoginDataStore));
-                this._loginFail.next(this.error);
-            }
-        );
-    }
-
-    public addComment(){
-        //TODO 
-    }
 
 }

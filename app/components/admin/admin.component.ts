@@ -15,6 +15,8 @@ import {
     state, 
     style, 
     transition } from '@angular/core';
+import { LoginEvents } from '../events/login.events';
+import { LoginService } from '../stores/login/login.service';
 
 @Component({
     selector: 'user-detail',
@@ -27,7 +29,8 @@ import {
                     </h1>
                     <div class="admin-page__content">
                         <form>
-                            <div class="login-modal__input-group">      
+                            <div class="login-modal__input-group">   
+                            {{data.username}}   
                                 <input class="login-modal__input" 
                                     [ngModel]="username" 
                                     (ngModelChange)="onEnterEmail($event)"
@@ -66,16 +69,26 @@ export class AdminComponent {
     error: string;
     comments: any;
     user: any;
+    data: any;
 
 	constructor(
         private route: ActivatedRoute,
-        private SignedInUserService: SignedInUserService
+        private SignedInUserService: SignedInUserService,
+        private LoginEvents: LoginEvents,
+        private LoginService: LoginService
 	) {
         this.error = null;
+        this.LoginService.getDataStore().subscribe((data) => {
+            this.data = data;
+        })
+
+        this.LoginEvents.logOut.subscribe((data) =>  {
+
+        })
 	}
 
-            //<htmleditor></htmleditor>
-        //         req.body.title && 
+        //<htmleditor></htmleditor>
+        // req.body.title && 
         // req.body.pictureUrl &&
         // req.body.postedBy &&
         // req.body.postBody &&
@@ -87,9 +100,9 @@ export class AdminComponent {
             .subscribe((data: any) => {
                if(data){
                    this.user = data
-                   console.log("Data from user service is currently", data);
                }
         })
+
 	}
 
 	

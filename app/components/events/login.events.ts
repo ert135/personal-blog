@@ -24,6 +24,7 @@ export interface ISuccessfulLoginResponse {
     message: string;
     token: string;
     type: string;
+    username: string;
 }
 
 @Injectable()
@@ -36,16 +37,10 @@ export class LoginEvents {
      public changePassword: Subject<string>;
      public changeEmail: Subject<string>;
      public login: Subject<IRequiredLoginData>;
+     public logOut: Subject<string>;
 
      private errorResponse: any;
      private error: string;
-
-     private LoginDataStore: {
-         loading: boolean;
-         username: string,
-         password: string,
-         error: string
-     }
 
      private apiUrl: string;
 
@@ -62,27 +57,22 @@ export class LoginEvents {
         this.closeForm = <Subject<ILoginData>> new Subject();
         this.changePassword = <Subject<string>> new Subject();
         this.changeEmail = <Subject<string>> new Subject();
-     }
-
-     public getSubscription(): void {
-
+        this.logOut = <Subject<string>> new Subject();
      }
 
      private setupSendLoginRequestSubscription(): void {
         this.login.subscribe((data: IRequiredLoginData) => {
             let headers = new Headers({ 'Content-Type': 'application/json' });
             let options = new RequestOptions({ headers: headers });
+            let email = data.username
             let formData = JSON.stringify({
-                email: this.LoginDataStore.username,
-                password: this.LoginDataStore.password
+                email: email,
+                password: data.password
             });
-            this.LoginDataStore.loading = true;
-            this.http.post(`${this.apiUrl}/auth`, data
+            this.http.post(`${this.apiUrl}/auth`, formData
             , options)
                 .map(response => response.json())
                 .subscribe(data   => {
-                    this.LoginDataStore.loading = false
-                    this.loginDataStore.next(Object.assign({}, this.LoginDataStore));
                     this.loginSuccess.next(data);
             }, 
                 error => {
@@ -93,9 +83,4 @@ export class LoginEvents {
             );
         })
     }
-
-    public addComment(){
-        //TODO 
-    }
-
 }

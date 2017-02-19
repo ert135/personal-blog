@@ -4,6 +4,7 @@ import { ViewContainerRef } from '@angular/core';
 import { LoginModal } from './login.component';
 import { loginModalWrapper } from './modalDirective';
 import { SignedInUserService } from './stores/signedInUser/signedInUser.service';
+import { LoginEvents} from './events/login.events';
 
 @Component({
     selector: 'main-header',
@@ -54,7 +55,8 @@ export class MainHeader {
     private name: string = null;
 
     constructor(
-        private SignedInUserService: SignedInUserService
+        private SignedInUserService: SignedInUserService,
+        private LoginEvents: LoginEvents
     ){
        
     }
@@ -80,6 +82,7 @@ export class MainHeader {
 	}
 
     logOut(){
-        this.SignedInUserService.logOut();
+        console.log("Logout called!!!");
+        this.LoginEvents.logOut.next();
     }
 }

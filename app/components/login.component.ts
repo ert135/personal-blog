@@ -9,6 +9,7 @@ import {
 
 import { LoginService } from './stores/login/login.service';
 import { LoginModel } from './models/login';
+import { LoginEvents } from './events/login.events';
 
 @Component({
     selector: 'dlg',
@@ -84,7 +85,8 @@ export class LoginModal {
     private password: string
 
 	constructor(
-		private loginService: LoginService
+		private loginService: LoginService,
+        private LoginEvents: LoginEvents
 	) {
         this.username ="";
         this.password ="";
@@ -99,22 +101,16 @@ export class LoginModal {
                 this.password = data.password;
 		})
 
-		this.loginService.getCloseEvent()
-            .skip(1)
-            .subscribe(() => {
-			    this.onClickedExit();
-		})
-
-		this.loginService.getFailEvent()
-            .subscribe((data) => {
-                console.log("called fail event!!!!!");
-		})
-
-        this.loginService.getSuccessEvent()
-            .skip(1)
+        this.LoginEvents.closeForm
             .subscribe((data) => {
                 this.onClickedExit();
 		})
+
+        this.LoginEvents.loginSuccess
+            .subscribe((data) => {
+                this.onClickedExit();
+		})
+
 	}
 
     close = new EventEmitter();
@@ -124,19 +120,30 @@ export class LoginModal {
     }
 
     closeForm() {
-        this.loginService.closeForm();
+        this.LoginEvents.closeForm.next();
     }
 
     onEnterEmail(text: string){
-    console.log("Text is", text);
-       this.loginService.updateUserName(text);
+        console.log("email text is", text);
+        this.LoginEvents.changeEmail.next(text);
     }
 
     onEnterPassword(text: string){
-        this.loginService.updatePassword(text);
+        console.log("New password is", text);
+        this.LoginEvents.changePassword.next(text);
     }
 
     submitDetails(): void {
-        this.loginService.sendLoginRequest();
+        console.log("username: ", this.username);
+        console.log("passowrd", this.password);
+        let username1 = this.username;
+        let password2 = this.password
+        console.log(this);
+        this.LoginEvents.login.next({
+            username: username1,
+            password: password2
+        });
     }
+
+
 }
