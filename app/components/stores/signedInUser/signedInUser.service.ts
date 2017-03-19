@@ -6,7 +6,7 @@ import { BehaviorSubject } from 'rxjs/Rx';
 import { ReplaySubject } from 'rxjs/Rx';
 import { LoginService } from '../login/login.service';
 import { JwtHelper } from 'angular2-jwt';
-import { LoginEvents } from "../../events/login.events"
+import { LoginEvents } from "../../events/login.events";
 
 // Import RxJs required methods
 import 'rxjs/add/operator/map';
@@ -37,7 +37,6 @@ export class SignedInUserService {
      private apiUrl: string;
      private token: string;
      private signedInUser: ISignedInUser;
-
 
     jwtHelper: JwtHelper = new JwtHelper();
 
@@ -118,17 +117,16 @@ export class SignedInUserService {
 
      private getDecodedToken(): void {
         this.signedInUser = this.jwtHelper.decodeToken(this.token);
-        console.log("Signedin user is", this.signedInUser);
+        //console.log("Signedin user is", this.signedInUser);
         this.signedInUser.token = localStorage.getItem('id_token');
         //ifd_token is default name that angular-2-jwt library looks to get a token from localstorage
-        console.log("Token is", localStorage.getItem('id_token'));
+        //console.log("Token is", localStorage.getItem('id_token'));
      }
 
      public logOut(): void {
          this.deleteJwt();
          this.signedInUser = this.getDefaultUser();
          this._SignedInUser.next(Object.assign({}, this.signedInUser));
-         console.log("Logging out!!!", this.signedInUser);
          //TODO IMPLIMENT BLACKLISTING TOKEN ON NODE SERVER, WE JSUT DELETE ON THE CLIENT FOR NOW
      }
 

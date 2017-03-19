@@ -40,6 +40,7 @@ import { LoginService } from '../stores/login/login.service';
                                 <span class="bar"></span>
                                 <label class="login-modal__label">Title</label>
                             </div>
+                            <htmleditor></htmleditor>
                         </form>
                     </div>
                 </div>

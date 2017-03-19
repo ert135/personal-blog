@@ -23,21 +23,69 @@ import { LoginModal } from './login.component';
 @Component({
     selector: 'post-detail',
     template: `
-        <div class="no-gutter detail-page-container"  *ngIf="error" [@loadingState]="loading == false">
+        <div 
+            class="no-gutter detail-page-container"  
+            *ngIf="error" 
+            [@loadingState]="loading == false"
+        >
             <h1 class="post-detail__title">
                 {{error}}
             </h1>
         </div>
-        <div class="no-gutter detail-page-container"  *ngIf="(loading == false) && (!error)" [@loadingState]="loading == false">
+        <div 
+            class="no-gutter detail-page-container"  
+            *ngIf="(loading == false) && (!error)" 
+            [@loadingState]="loading == false"
+        >
             <div class="post-detail">
                 <aside class="post-detail__aside">
-                    <div class="post-detail__aside-image" [ngStyle]="{ 'background-image': 'url(' + post.pictureUrl + ')'}">
+                    <div 
+                        class="post-detail__aside-image" 
+                        [ngStyle]="{ 'background-image': 'url(' + post.pictureUrl + ')'}"
+                    >
                     </div>
                 </aside>
                 <div class="post-detail__content">
-                    <h1 class="post-detail__title">
+                    <h1 
+                        class="post-detail__title"
+                        *ngIf="editMode || (editTitle == true)"
+                    >
                         {{post.title}}
+                        <span 
+                            class="post-detail__title-edit-icon glyphicon glyphicon-pencil"
+                            (click)="toggleEditTitle()"
+                            *ngIf="editMode"
+                        >
+                        </span>
                     </h1>
+                    <div 
+                        class="post-detail__input-container"
+                        *ngIf="editTitle" 
+                    >
+                        <div 
+                            class="login-modal__input-group" 
+                            [@loadingState]="loading == false"
+                        >      
+                            <input 
+                                class="login-modal__input" 
+                                [ngModel]="newEmail" 
+                                (ngModelChange)="typeNewTitle($event)"
+                                [ngModelOptions]="{standalone: true}"
+                            >
+                            <span class="highlight"></span>
+                            <span class="bar"></span>
+                        </div>
+                        <span 
+                            class="post-detail__title-edit-icon glyphicon glyphicon-remove"
+                            (click)="toggleEditTitle()"
+                        >
+                        </span>
+                        <span 
+                            class="post-detail__title-edit-icon glyphicon glyphicon-ok"
+                            (click)="savePost()"
+                        >
+                        </span>
+                    </div>
                     <div class="post-detail__info-bar">
                         <h2 class="post-detail__info-text post-detail__info-text--first">
                             {{post.postedBy}}
@@ -55,10 +103,11 @@ import { LoginModal } from './login.component';
                         </div>
                         <div >
                             <div class="post-detail__comments" *ngFor='let post of post.comments'>
-                                <div class="post-detail__comment-delete" 
-                                     (click)="deleteComment(post._id)"
-                                      *ngIf="user.type == 'admin'"
-                                     >
+                                <div 
+                                    class="post-detail__comment-delete" 
+                                    (click)="deleteComment(post._id)"
+                                    *ngIf="user.type == 'admin'"
+                                >
                                     <span class="glyphicon glyphicon-remove"></span>
                                 </div>
                                 <div class="post-detail__comment">
@@ -68,7 +117,7 @@ import { LoginModal } from './login.component';
                                     <div class="post-detail__comment-body">
                                         <h2 class="post-detail__comments-user-name"> {{post.userName}} </h2>
                                         <h3 class="post-detail__timestamp"> {{post.postedOn}} </h3>
-                                        <div class="post-detail__comment-text">{{post.text}} </div> 
+                                        <div class="post-detail__comment-text"> {{post.text}} </div> 
                                     </div>
                                 </div>
                             </div>
@@ -78,7 +127,11 @@ import { LoginModal } from './login.component';
                              (click)='showEditor()'>
                                 Add comment
                         </div>
-                        <div class="post-detail__sign-in-message" *ngIf="!user.id" (click)="openLoginModal()">
+                        <div 
+                            class="post-detail__sign-in-message" 
+                            *ngIf="!user.id" 
+                            (click)="openLoginModal()"
+                        >
                             Sign in to leave a comment
                         </div>
                         <div *ngIf="editMode && user.id && !savingComment"
@@ -124,6 +177,7 @@ export class PostDetailComponent {
     private editMode: boolean;
     private comment: string;
     private savingComment: boolean;
+    private editTitle: boolean;
 
 	constructor(
 		private PostDetailService: PostDetailService,
@@ -137,7 +191,7 @@ export class PostDetailComponent {
     @ViewChild(loginModalWrapper) dialogAnchor: loginModalWrapper;
     public openLoginModal() {
         //any used below to make the compiler behave itself
-        //TODO make anhcor component generic to allow passing in any component to display
+        //TODO make anchor component generic to allow passing in any component to display
         this.dialogAnchor.createDialog(<any>LoginModal);
     }
 	
@@ -150,13 +204,15 @@ export class PostDetailComponent {
                 this.editMode = data.openEditor;
                 this.comment = data.commentText;
                 this.savingComment = data.savingComment;
+                this.editMode = data.editMode;
+                this.editTitle = data.editTitle;
 		})
 
         this.route.params
-        .map((paramaterValueArray) => paramaterValueArray['id'])
-            .subscribe((id: number) => {
-                this.PostDetailService.loadPost(id)
-         });
+            .map((paramaterValueArray) => paramaterValueArray['id'])
+                .subscribe((id: number) => {
+                    this.PostDetailService.loadPost(id)
+            });
 
        let userSubscription =  this.SignedInUserService.getSignedInUserSubscription()
             .subscribe((data: any) => {
@@ -186,14 +242,42 @@ export class PostDetailComponent {
         this.PostDetailService.deleteComment(this.post.id, commentId);
     }
 
+    public savePost(): void {
+
+    }
+
+    toggleEditTitle() {
+        console.log("Copntroller function called!!!");
+        this.PostDetailService.editTitle();
+    }
+
     ngOnDestroy() {
         this.PostDetailService.closeEditor();
         this.postObservable.unsubscribe();
     }
 	
 	onSubmit() {
-		//this.todoService.create({ value: this.todoForm.controls.todo.value });
+
 	}
 
-	
+    cancelEditTitle(): void {
+        this.PostDetailService.cancelEditTitle();
+    }
+
+    typeNewTitle(event): void {
+
+    }
+
+    editPostBody(): void {
+
+    }
+
+    cancelEditPostBody(): void {
+
+    }
+
+    typeNewPostBody(): void {
+
+    }
+
 }

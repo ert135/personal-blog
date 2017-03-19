@@ -27,7 +27,8 @@ import { LoginEvents } from './events/login.events';
             </div>
 
             <div class="login-modal__input-group" *ngIf="loading == false" [@loadingState]="loading == false">      
-                <input class="login-modal__input" 
+                <input 
+                    class="login-modal__input" 
                     [ngModel]="username" 
                     (ngModelChange)="onEnterEmail($event)"
                     [ngModelOptions]="{standalone: true}"
@@ -38,7 +39,8 @@ import { LoginEvents } from './events/login.events';
             </div>
 
             <div class="login-modal__input-group" *ngIf="loading == false" [@loadingState]="loading == false">      
-                <input class="login-modal__input" 
+                <input 
+                    class="login-modal__input" 
                     [ngModel]="password" 
                     (ngModelChange)="onEnterPassword($event)"
                     [ngModelOptions]="{standalone: true}"

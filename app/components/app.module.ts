@@ -7,6 +7,7 @@ import { HttpModule } from '@angular/http';
 import { AUTH_PROVIDERS } from 'angular2-jwt';
 import { FormsModule }   from '@angular/forms';
 import { AdminModule }   from './admin/admin.module';
+import { CoreComponentsModule } from './core/core-components.module'
 
 //components
 import { MainPage } from './main-page';
@@ -51,7 +52,8 @@ import { CKEditorModule } from 'ng2-ckeditor';
     FormsModule,
     CKEditorModule,
     AdminModule,
-    EventsModule.forRoot()
+    EventsModule.forRoot(),
+    CoreComponentsModule
   ],
   exports: [
      MainHeader

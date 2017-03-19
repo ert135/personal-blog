@@ -82,7 +82,6 @@ export class MainHeader {
 	}
 
     logOut(){
-        console.log("Logout called!!!");
         this.LoginEvents.logOut.next();
     }
 }

@@ -7,6 +7,8 @@ import { BehaviorSubject } from 'rxjs/Rx';
 import { Subject } from 'rxjs/Rx';
 import { PostListItem } from '../../models/post';
 import { AuthHttp } from 'angular2-jwt';
+import { SignedInUserService } from '../signedInUser/signedInUser.service';
+import { LoginEvents } from "../../events/login.events";
 
 // Import RxJs required methods
 import 'rxjs/add/operator/map';
@@ -19,6 +21,9 @@ export interface IPostData {
     openEditor: boolean;
     commentText: string;
     savingComment: boolean;
+    editMode: boolean;
+    editTitle: boolean;
+    newTitleText: string;
 }
 
 @Injectable()
@@ -35,12 +40,18 @@ export class PostDetailService {
          commentText: string;
          savingComment: boolean;
          saveCommentError: string;
+         editMode: boolean;
+         editTitle: boolean;
+         newTitleText: string;
      }
 
      private apiUrl: string;
 
-     constructor (private http: Http,
-     public authHttp: AuthHttp
+     constructor (
+        private http: Http,
+        public authHttp: AuthHttp,
+        private SignedInUserService: SignedInUserService,
+        private LoginEvents: LoginEvents
      ) {
         this.setDefaultLoadingState();
         this.apiUrl = 'http://blog-robertblog.rhcloud.com';
@@ -51,10 +62,42 @@ export class PostDetailService {
             openEditor: false,
             commentText: "",
             savingComment: false,
-            saveCommentError: ""
+            saveCommentError: "",
+            editMode: false,
+            editTitle: false,
+            newTitleText: ""
         } 
         this._posts = <Subject<IPostData>> new Subject();
+        this.getSignedInUserSubscription();
+        this.getLogoutSubscription();
      }
+
+    private getLogoutSubscription(){
+        this.LoginEvents.logOut.subscribe(() => {
+            this.postDataStore = {
+                posts: [],
+                loading: true,
+                error: "",
+                openEditor: false,
+                commentText: "",
+                savingComment: false,
+                saveCommentError: "",
+                editMode: false,
+                editTitle: false,
+                newTitleText: ""
+            } 
+        })
+    }
+
+    private getSignedInUserSubscription() {
+        this.SignedInUserService.getSignedInUserSubscription()
+            .subscribe((data: any) => {
+                if(data.id){
+                    this.postDataStore.editMode = true;
+                    this._posts.next(this.postDataStore);
+                }
+        })
+    }
 
      public getDefaultState(): any {
          return {
@@ -151,7 +194,6 @@ export class PostDetailService {
         );
     }
 
-
     public updateComment(text: string){
         this.postDataStore.commentText = text;
     }
@@ -173,8 +215,23 @@ export class PostDetailService {
             error: "",
             openEditor: false,
             commentText: "",
-            savingComment: false
+            savingComment: false,
+            editMode: false,
+            editTitle: false,
+            newTitleText: ""
         }
     }
 
+    public editTitle(): void {
+        this.postDataStore.editTitle = true;
+        this._posts.next(Object.assign({}, this.postDataStore));
+    }
+
+    public cancelEditTitle(): void {
+        this.postDataStore.editTitle = true;
+        this.postDataStore.newTitleText = "";
+        this._posts.next(Object.assign({}, this.postDataStore));
+    }
+	
 }
+
