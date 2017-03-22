@@ -35,6 +35,7 @@ export class HtmlEditor {
     }
 
     private onChange(event) {
+      console.log("CXhange called¬!¬!", event);
         this.textUpdated.emit(event);
     }
 

@@ -299,13 +299,13 @@ export class PostDetailService {
         this._posts.next(Object.assign({}, this.postDataStore));
         this.authHttp.put(`${this.apiUrl}/posts/${id}`,{
             newData: {
-                body: this.postDataStore.newBodyText
+                postBody: this.postDataStore.newBodyText
             }
         },options)
             .map(response => response.json())
             .subscribe(data  => {
                 this.postDataStore.posts[0] = data;
-                this.postDataStore.editTitle = false;
+                this.postDataStore.editPost = false;
                 this.postDataStore.saving = false;
                 this._posts.next(Object.assign({}, this.postDataStore));
         }, 

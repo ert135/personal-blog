@@ -101,7 +101,7 @@ import { LoginModal } from './login.component';
                         <htmleditor
                             *ngIf="editPost"
                             [text]="newBodyText"
-                            (textUpdated)="typeNewPostBody(text)"
+                            (textUpdated)="typeNewPostBody($event)"
                         ></htmleditor>
                         <span 
                             class="post-detail__body-edit-icon glyphicon glyphicon-pencil"
