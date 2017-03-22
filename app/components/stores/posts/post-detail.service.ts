@@ -24,6 +24,9 @@ export interface IPostData {
     editMode: boolean;
     editTitle: boolean;
     newTitleText: string;
+    saving: boolean;
+    editPost: boolean;
+    newBodyText: string;
 }
 
 @Injectable()
@@ -43,6 +46,9 @@ export class PostDetailService {
          editMode: boolean;
          editTitle: boolean;
          newTitleText: string;
+         saving: boolean;
+         editPost: boolean;
+         newBodyText: string;
      }
 
      private apiUrl: string;
@@ -65,7 +71,10 @@ export class PostDetailService {
             saveCommentError: "",
             editMode: false,
             editTitle: false,
-            newTitleText: ""
+            newTitleText: "",
+            saving: false,
+            editPost: false,
+            newBodyText: ""
         } 
         this._posts = <Subject<IPostData>> new Subject();
         this.getSignedInUserSubscription();
@@ -84,7 +93,10 @@ export class PostDetailService {
                 saveCommentError: "",
                 editMode: false,
                 editTitle: false,
-                newTitleText: ""
+                newTitleText: "",
+                saving: false,
+                editPost: false,
+                newBodyText: ""
             } 
         })
     }
@@ -218,7 +230,10 @@ export class PostDetailService {
             savingComment: false,
             editMode: false,
             editTitle: false,
-            newTitleText: ""
+            newTitleText: "",
+            saving: false,
+            editPost: false,
+            newBodyText: ""
         }
     }
 
@@ -228,9 +243,76 @@ export class PostDetailService {
     }
 
     public cancelEditTitle(): void {
-        this.postDataStore.editTitle = true;
+        this.postDataStore.editTitle = false;
         this.postDataStore.newTitleText = "";
         this._posts.next(Object.assign({}, this.postDataStore));
+    }
+
+    public typeEditTitle(newTitleText: string): void {
+        this.postDataStore.newTitleText = newTitleText;
+        this._posts.next(Object.assign({}, this.postDataStore));
+    }
+
+    public saveNewTitle(id: number): void {
+        let headers = new Headers({ 'Content-Type': 'application/json',  });
+        let options = new RequestOptions({ headers: headers });
+        this.postDataStore.saving = true;
+        this._posts.next(Object.assign({}, this.postDataStore));
+        this.authHttp.put(`${this.apiUrl}/posts/${id}`,{
+            newData: {
+                title: this.postDataStore.newTitleText
+            }
+        },options)
+            .map(response => response.json())
+            .subscribe(data  => {
+                this.postDataStore.posts[0] = data;
+                this.postDataStore.editTitle = false;
+                this.postDataStore.saving = false;
+                this._posts.next(Object.assign({}, this.postDataStore));
+        }, 
+            error => {
+                console.log("Error is", error);
+            }
+        );
+    }
+
+    public editPostBody(): void {
+        this.postDataStore.editPost = true;
+        this._posts.next(Object.assign({}, this.postDataStore));
+    }
+
+    public cancelEditPostBody(): void {
+        this.postDataStore.editPost = false;
+        this.postDataStore.newBodyText = "";
+        this._posts.next(Object.assign({}, this.postDataStore));
+    }
+
+    public typeNewPostBody(newText: string): void {
+        this.postDataStore.newBodyText = newText;
+        this._posts.next(Object.assign({}, this.postDataStore));
+    }
+
+    public saveNewPostBody(id: number): void {
+        let headers = new Headers({ 'Content-Type': 'application/json',  });
+        let options = new RequestOptions({ headers: headers });
+        this.postDataStore.saving = true;
+        this._posts.next(Object.assign({}, this.postDataStore));
+        this.authHttp.put(`${this.apiUrl}/posts/${id}`,{
+            newData: {
+                body: this.postDataStore.newBodyText
+            }
+        },options)
+            .map(response => response.json())
+            .subscribe(data  => {
+                this.postDataStore.posts[0] = data;
+                this.postDataStore.editTitle = false;
+                this.postDataStore.saving = false;
+                this._posts.next(Object.assign({}, this.postDataStore));
+        }, 
+            error => {
+                console.log("Error is", error);
+            }
+        );
     }
 	
 }

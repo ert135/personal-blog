@@ -74,6 +74,7 @@
     }
 
     &__post-body {
+        position: relative;
         margin-top:2rem;
         font-size:18px;
         -moz-column-count: 2;
@@ -146,6 +147,10 @@
         //styles to go here
     }
 
+    &__input-group{
+        width:100%;
+    }
+
     &__comment-circle{
         border-radius: 50%;
         min-width: 100px;
@@ -155,6 +160,18 @@
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+
+    &__body-edit-icon{
+        position: absolute!important;
+        top:10px!important;
+        right:10px!important;
+        font-size: 3rem!important;
+        cursor: pointer;
+    }
+
+    &__body-save-buttons{
+        width:100%;
     }
 
     &__user-icon{

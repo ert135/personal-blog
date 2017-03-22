@@ -48,13 +48,13 @@ import { LoginModal } from './login.component';
                 <div class="post-detail__content">
                     <h1 
                         class="post-detail__title"
-                        *ngIf="editMode || (editTitle == true)"
+                        *ngIf="editTitle == false"
                     >
                         {{post.title}}
                         <span 
                             class="post-detail__title-edit-icon glyphicon glyphicon-pencil"
                             (click)="toggleEditTitle()"
-                            *ngIf="editMode"
+                            *ngIf="editMode && user"
                         >
                         </span>
                     </h1>
@@ -63,8 +63,7 @@ import { LoginModal } from './login.component';
                         *ngIf="editTitle" 
                     >
                         <div 
-                            class="login-modal__input-group" 
-                            [@loadingState]="loading == false"
+                            class="post-detail__input-group" 
                         >      
                             <input 
                                 class="login-modal__input" 
@@ -77,12 +76,12 @@ import { LoginModal } from './login.component';
                         </div>
                         <span 
                             class="post-detail__title-edit-icon glyphicon glyphicon-remove"
-                            (click)="toggleEditTitle()"
+                            (click)="cancelEditTitle()"
                         >
                         </span>
                         <span 
                             class="post-detail__title-edit-icon glyphicon glyphicon-ok"
-                            (click)="savePost()"
+                            (click)="saveNewTitle()"
                         >
                         </span>
                     </div>
@@ -95,7 +94,35 @@ import { LoginModal } from './login.component';
                         </h2>
                     </div>
                     <div class="post-detail__post-body">
-                        <div [innerHTML]="post.postBody"></div>
+                        <div 
+                            [innerHTML]="post.postBody"
+                            *ngIf="!editPost"
+                        ></div>
+                        <htmleditor
+                            *ngIf="editPost"
+                            [text]="newBodyText"
+                            (textUpdated)="typeNewPostBody(text)"
+                        ></htmleditor>
+                        <span 
+                            class="post-detail__body-edit-icon glyphicon glyphicon-pencil"
+                            (click)="toggleEditPost()"
+                        >
+                        </span>
+                        <div 
+                            class="post-detail__body-save-buttons"
+                            *ngIf="editPost"
+                        >
+                            <span 
+                                class="post-detail__title-edit-icon glyphicon glyphicon-remove"
+                                (click)="cancelEditPostBody()"
+                            >
+                            </span>
+                            <span 
+                                class="post-detail__title-edit-icon glyphicon glyphicon-ok"
+                                (click)="saveNewPostBody()"
+                            >
+                            </span>
+                        </div>
                     </div>
                     <div class="post-detail__comments">
                         <div class="post-detail__comments-header">
@@ -134,8 +161,9 @@ import { LoginModal } from './login.component';
                         >
                             Sign in to leave a comment
                         </div>
-                        <div *ngIf="editMode && user.id && !savingComment"
-                             [@loadingState]="editmode == false"
+                        <div 
+                            *ngIf="editMode && user.id && !savingComment"
+                            [@loadingState]="editmode == false"
                         >
                             <editor
                                 (textUpdated)="updateCommentText($event)"
@@ -178,6 +206,9 @@ export class PostDetailComponent {
     private comment: string;
     private savingComment: boolean;
     private editTitle: boolean;
+    private boolean: string;
+    private editPost: boolean;
+    private newPostText: string;
 
 	constructor(
 		private PostDetailService: PostDetailService,
@@ -206,6 +237,8 @@ export class PostDetailComponent {
                 this.savingComment = data.savingComment;
                 this.editMode = data.editMode;
                 this.editTitle = data.editTitle;
+                this.editPost = data.editPost;
+                this.newPostText = data.newBodyText;
 		})
 
         this.route.params
@@ -247,7 +280,6 @@ export class PostDetailComponent {
     }
 
     toggleEditTitle() {
-        console.log("Copntroller function called!!!");
         this.PostDetailService.editTitle();
     }
 
@@ -264,20 +296,29 @@ export class PostDetailComponent {
         this.PostDetailService.cancelEditTitle();
     }
 
-    typeNewTitle(event): void {
-
+    typeNewTitle(event: string): void {
+        this.PostDetailService.typeEditTitle(event);
     }
 
-    editPostBody(): void {
-
+    toggleEditPost(): void {
+        this.PostDetailService.editPostBody();
     }
 
     cancelEditPostBody(): void {
-
+        this.PostDetailService.cancelEditPostBody();
     }
 
-    typeNewPostBody(): void {
+    typeNewPostBody(event): void {
+        console.log("Event is", event);
+        this.PostDetailService.typeNewPostBody(event);
+    }
 
+    saveNewPostBody(): void {
+        this.PostDetailService.saveNewPostBody(this.post.id);
+    }
+
+    saveNewTitle(): void {
+        this.PostDetailService.saveNewTitle(this.post.id);
     }
 
 }

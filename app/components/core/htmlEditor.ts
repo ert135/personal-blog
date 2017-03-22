@@ -2,15 +2,17 @@ import {Component,
         ViewChild, 
         NgModule, 
         EventEmitter, 
-        Output } from '@angular/core';
+        Output,
+        Input
+     } from '@angular/core';
 
 
 @Component({
   selector: 'htmleditor',
   template: `
   <ckeditor
-    [(ngModel)]="ckeditorContent"
-    [config]="{uiColor: '#99000'}"
+    [(ngModel)]="text"
+    [config]="{uiColor: '#424242'}"
     (change)="onChange($event)"
     (ready)="onReady($event)"
     (focus)="onFocus($event)"
@@ -21,6 +23,7 @@ import {Component,
 })
 export class HtmlEditor {
 
+    @Input() text;
     @Output() textUpdated = new EventEmitter();
     @Output() submit = new EventEmitter();
 
