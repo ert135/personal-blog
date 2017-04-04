@@ -83,21 +83,21 @@ export class PostDetailService {
 
     private getLogoutSubscription(){
         this.LoginEvents.logOut.subscribe(() => {
-            this.postDataStore = {
-                posts: [],
-                loading: true,
-                error: "",
-                openEditor: false,
-                commentText: "",
-                savingComment: false,
-                saveCommentError: "",
-                editMode: false,
-                editTitle: false,
-                newTitleText: "",
-                saving: false,
-                editPost: false,
-                newBodyText: ""
-            } 
+            // this.postDataStore = {
+            //     posts: [],
+            //     loading: true,
+            //     error: "",
+            //     openEditor: false,
+            //     commentText: "",
+            //     savingComment: false,
+            //     saveCommentError: "",
+            //     editMode: false,
+            //     editTitle: false,
+            //     newTitleText: "",
+            //     saving: false,
+            //     editPost: false,
+            //     newBodyText: ""
+            // } 
         })
     }
 

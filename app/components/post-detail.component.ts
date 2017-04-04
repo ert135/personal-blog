@@ -54,7 +54,7 @@ import { LoginModal } from './login.component';
                         <span 
                             class="post-detail__title-edit-icon glyphicon glyphicon-pencil"
                             (click)="toggleEditTitle()"
-                            *ngIf="editMode && user"
+                            *ngIf="editMode && user.id"
                         >
                         </span>
                     </h1>
@@ -67,7 +67,7 @@ import { LoginModal } from './login.component';
                         >      
                             <input 
                                 class="login-modal__input" 
-                                [ngModel]="newEmail" 
+                                [ngModel]="post.title" 
                                 (ngModelChange)="typeNewTitle($event)"
                                 [ngModelOptions]="{standalone: true}"
                             >
@@ -100,12 +100,13 @@ import { LoginModal } from './login.component';
                         ></div>
                         <htmleditor
                             *ngIf="editPost"
-                            [text]="newBodyText"
+                            [text]="post.postBody"
                             (textUpdated)="typeNewPostBody($event)"
                         ></htmleditor>
                         <span 
                             class="post-detail__body-edit-icon glyphicon glyphicon-pencil"
                             (click)="toggleEditPost()"
+                            *ngIf="user.id"
                         >
                         </span>
                         <div 
@@ -277,6 +278,10 @@ export class PostDetailComponent {
 
     public savePost(): void {
 
+    }
+
+    private getPostDate(date){
+        console.log("Post date is", date);
     }
 
     toggleEditTitle() {
