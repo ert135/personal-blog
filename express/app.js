@@ -2,7 +2,7 @@ var express = require('express');
 var path = require('path');
 var app = express();
 var angularApp = "../index.html"
-var port = 8080;
+var port = 80;
 var path = require('path');
 
 app.get('/', function(req, res) {
