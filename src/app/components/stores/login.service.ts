@@ -4,10 +4,7 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { BehaviorSubject } from 'rxjs/Rx';
 import { LoginEvents } from '../events/login.events';
-
-// Import RxJs required methods
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
+import { appConfig } from '../../../../config/enviroment';
 
 export interface ILoginData {
     loading: boolean;
@@ -37,21 +34,21 @@ export class LoginService {
      private error: string;
      private errorResponse: any;
 
-     private LoginDataStore: {
-         loading: boolean;
-         username: string,
-         password: string,
-         error: string
-     }
+    private LoginDataStore: {
+        loading: boolean;
+        username: string,
+        password: string,
+        error: string
+    }
 
-     private apiUrl: string;
+    private apiUrl: string;
 
-     constructor (
-         private http: Http,
-         private LoginEvents: LoginEvents
-     ) {
+    constructor (
+        private http: Http,
+        private LoginEvents: LoginEvents
+    ) {
         this.error =  "";
-        this.apiUrl = 'http://blog-robertblog.rhcloud.com';
+        this.apiUrl = appConfig.apiUrl;
         this.LoginDataStore = {
             loading: false,
             username: "",
@@ -65,63 +62,62 @@ export class LoginService {
         this.setupChangePasswordSubscription();
         this.setupChangeEmailSubscription();
         this.setupLoginFailSubscription();
-     }
+    }
 
-     private setupLoginAttemptSubscription(){
+    private setupLoginAttemptSubscription() {
         this.LoginEvents.login.subscribe((data) => {
             this.LoginDataStore.loading = true;
             this._loginDataStore.next(this.LoginDataStore);
         })
-     }
+    }
 
-    private setupChangePasswordSubscription(){
+    private setupChangePasswordSubscription() {
         this.LoginEvents.changePassword.subscribe((data) => {
             this.LoginDataStore.password = data;
             this._loginDataStore.next(this.LoginDataStore);
         })
-     }
+    }
 
-    private setupChangeEmailSubscription(){
+    private setupChangeEmailSubscription() {
         this.LoginEvents.changeEmail.subscribe((data) => {
             this.LoginDataStore.username = data;
             this._loginDataStore.next(this.LoginDataStore);
         })
-     }
+    }
 
-     private setupLoginSuccessSubscription(){
+    private setupLoginSuccessSubscription() {
         this.LoginEvents.loginSuccess.subscribe((data) => {
             this.LoginDataStore.loading = false;
             this._loginDataStore.next(this.LoginDataStore);
         })
-     }
+    }
 
-    private setupCloseFormSubscription(){
+    private setupCloseFormSubscription() {
         this.LoginEvents.closeForm.subscribe((data) => {
             this.LoginDataStore = this.getDefaultState();
             this._loginDataStore.next(this.LoginDataStore);
         })
-     }
+    }
 
-     private setupLoginFailSubscription() {
+    private setupLoginFailSubscription() {
         this.LoginEvents.loginFail.subscribe((data) => {
             this.LoginDataStore.error = data;
             this.LoginDataStore.loading = false;
             this._loginDataStore.next(this.LoginDataStore);
         })
-     }
+    }
 
-     private getDefaultState() {
-         return {
+    private getDefaultState() {
+        return {
             loading: false,
             username: "",
             password: "",
             error: ""
-         }
-     }
+        }
+    }
 
-     public getDataStore() {
-         return this._loginDataStore.asObservable();
-     }
-
+    public getDataStore() {
+        return this._loginDataStore.asObservable();
+    }
 
 }

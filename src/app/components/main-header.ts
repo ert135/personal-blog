@@ -10,14 +10,9 @@ import { LoginEvents } from './events/login.events';
     selector: 'main-header',
     template: `
         <div class="main-header">
-            <h1 class="main-header__title" [routerLink]="['/']"> Robert Smith </h1>
+            <h1 class="main-header__title" [routerLink]="['/']"> Robert Smith - Software Engineer </h1>
             <ul class="main-header__links">
-                <li class="main-header__link-item">
-                    Projects
-                </li>
-                <li class="main-header__link-item">
-                    Posts
-                </li>
+
             </ul>
             <div class="main-header__user-buttons-container">
                 <div class="main-header__login-button"
@@ -51,7 +46,6 @@ import { LoginEvents } from './events/login.events';
 })
 export class MainHeader {
 
-
     private name: string = null;
 
     constructor(
@@ -71,7 +65,7 @@ export class MainHeader {
     ngOnInit() {
         this.SignedInUserService.getSignedInUserSubscription()
             .subscribe((data: any) => {
-               if(data){
+               if (data) {
                    this.name = data.name;
                }
         })
@@ -81,7 +75,7 @@ export class MainHeader {
 
 	}
 
-    logOut(){
+    logOut() {
         this.LoginEvents.logOut.next();
     }
 }

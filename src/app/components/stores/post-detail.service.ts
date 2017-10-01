@@ -9,10 +9,7 @@ import { PostListItem } from '../models/post';
 import { AuthHttp } from 'angular2-jwt';
 import { SignedInUserService } from './signedInUser.service';
 import { LoginEvents } from "../events/login.events";
-
-// Import RxJs required methods
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
+import { appConfig } from '../../../../config/enviroment';
 
 export interface IPostData {
     posts: PostListItem[],
@@ -32,35 +29,35 @@ export interface IPostData {
 @Injectable()
 export class PostDetailService {
     
-     posts: Observable<PostListItem[]>
+     public posts: Observable<PostListItem[]>
      private _posts: Subject<IPostData>;
 
-     private postDataStore: {
-         loading: boolean;
-         posts: PostListItem[];
-         error: string;
-         openEditor: boolean;
-         commentText: string;
-         savingComment: boolean;
-         saveCommentError: string;
-         editMode: boolean;
-         editTitle: boolean;
-         newTitleText: string;
-         saving: boolean;
-         editPost: boolean;
-         newBodyText: string;
-     }
+    private postDataStore: {
+        loading: boolean;
+        posts: PostListItem[];
+        error: string;
+        openEditor: boolean;
+        commentText: string;
+        savingComment: boolean;
+        saveCommentError: string;
+        editMode: boolean;
+        editTitle: boolean;
+        newTitleText: string;
+        saving: boolean;
+        editPost: boolean;
+        newBodyText: string;
+    }
 
-     private apiUrl: string;
+    private apiUrl: string;
 
-     constructor (
+    constructor (
         private http: Http,
         public authHttp: AuthHttp,
         private SignedInUserService: SignedInUserService,
         private LoginEvents: LoginEvents
-     ) {
+    ) {
         this.setDefaultLoadingState();
-        this.apiUrl = 'http://blog-robertblog.rhcloud.com';
+        this.apiUrl = appConfig.apiUrl;
         this.postDataStore = {
             posts: [],
             loading: true,
@@ -79,9 +76,9 @@ export class PostDetailService {
         this._posts = <Subject<IPostData>> new Subject();
         this.getSignedInUserSubscription();
         this.getLogoutSubscription();
-     }
+    }
 
-    private getLogoutSubscription(){
+    private getLogoutSubscription() {
         this.LoginEvents.logOut.subscribe(() => {
             // this.postDataStore = {
             //     posts: [],

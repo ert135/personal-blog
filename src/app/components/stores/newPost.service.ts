@@ -4,10 +4,7 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { BehaviorSubject } from 'rxjs/Rx';
 import { CreatePostEvents } from '../events/createPost.events';
-
-// Import RxJs required methods
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
+import { appConfig } from '../../../../config/enviroment';
 
 export interface INewPostDataStore {
     saving: boolean;
@@ -29,7 +26,7 @@ export class NewPostService {
          private CreatePostEvents: CreatePostEvents
      ) {
         this.error =  "";
-        this.apiUrl = 'http://blog-robertblog.rhcloud.com';
+        this.apiUrl = appConfig.apiUrl;
         this.newPostDataStore = this.getDefaultState();
         this._newPostDataStore = <BehaviorSubject<INewPostDataStore>> new BehaviorSubject(this.getDefaultState());
         this.setupTypeTitleSubscription();

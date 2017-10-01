@@ -7,9 +7,44 @@
     <script src="https://cdn.ckeditor.com/4.5.11/full/ckeditor.js"></script>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+		.main-loading-spinner {
+			transition: all 200ms ease-in-out;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+		}
+
+		/* default .loading styles, .loading should be invisible, opacity: 0, z-index: -1 */
+		.loading {
+			opacity: 0;
+			transition: all .5s ease-in-out;
+			position: fixed;
+			height: 100%;
+			width: 100%;
+			top: 0;
+			left: 0;
+			z-index: -1;
+		}
+		/* .loading screen is visible when app is not bootstraped yet, .my-app is empty */
+		my-app:empty + .loading {
+			opacity: 1;
+			z-index: 100;
+			background: #444;
+		}
+
+		@media all and (max-width: 500px) {
+			.main-loading-spinner {
+				position: absolute;
+				top: 20%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+			}
+		}
+    </style>
   </head>
 
-  <!-- 3. Display the application -->
   <body class = "main">
     <my-app></my-app>
 

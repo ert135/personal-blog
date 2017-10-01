@@ -11,11 +11,10 @@ import './app/less/main-header.less';
 import './app/less/post-detail.less';
 import './app/less/posts.less';
 
-
 import { AppModule } from './app/components/app.module';
 
 if (process.env.ENV === 'production') {
-  enableProdMode();
+    enableProdMode();
 }
 
 platformBrowserDynamic().bootstrapModule(AppModule);

@@ -5,6 +5,7 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { BehaviorSubject } from 'rxjs/Rx';
 import { PostListItem } from '../models/post';
+import { appConfig } from '../../../../config/enviroment';
 
 // Import RxJs required methods
 import 'rxjs/add/operator/map';
@@ -19,54 +20,54 @@ export interface IPostData {
 @Injectable()
 export class MainPostService {
     
-     posts: Observable<PostListItem[]>
+    posts: Observable<PostListItem[]>
      
-     private _posts: BehaviorSubject<IPostData> = new BehaviorSubject(this.getDefaultState());
+    private _posts: BehaviorSubject<IPostData> = new BehaviorSubject(this.getDefaultState());
 
-     private postDataStore: {
-         loading: boolean;
-         posts: PostListItem[];
-         error: string;
-     }
+    private postDataStore: {
+        loading: boolean;
+        posts: PostListItem[];
+        error: string;
+    }
 
-     private apiUrl: string;
-     
+    private apiUrl: string;
+    
 
-     constructor (private http: Http) {
+    constructor (private http: Http) {
         this.setDefaultLoadingState();
-        this.apiUrl = 'http://blog-robertblog.rhcloud.com';
+        this.apiUrl = appConfig.apiUrl;
         this.postDataStore = {
             posts: [],
             loading: true,
             error: ""
         } 
-     }
+    }
 
-     public getDefaultState(): IPostData {
-         return {
-             posts: [{
-                 id: 0,
-                 postedBy: "",
-                 text: "",
-                 comments: [
-                     
-                 ],
-                 postedOn: "",
-                 subtitle: "",
-                 title: "",
-                 top: false,
-                 pictureUrl: ""
-             }],
-             loading:true,
-             error: ""
-         }
-     }
+    public getDefaultState(): IPostData {
+        return {
+            posts: [{
+                id: 0,
+                postedBy: "",
+                text: "",
+                comments: [
+                    
+                ],
+                postedOn: "",
+                subtitle: "",
+                title: "",
+                top: false,
+                pictureUrl: ""
+            }],
+            loading:true,
+            error: ""
+        }
+    }
 
-     public getDataStore() {
-         return this._posts.asObservable();
-     }
+    public getDataStore() {
+        return this._posts.asObservable();
+    }
 
-     public loadAll() {
+    public loadAll() {
         this.postDataStore.loading = true;
         this.http.get(`${this.apiUrl}/posts`)
             .map(response => response.json())

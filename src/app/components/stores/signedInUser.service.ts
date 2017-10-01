@@ -26,17 +26,17 @@ export interface ISignedInUser {
 @Injectable()
 export class SignedInUserService {
 
-     private successSubscription: Observable<LoginService>;
+    private successSubscription: Observable<LoginService>;
      
-     private LoginDataStore: {
-         loading: boolean;
-         username: string,
-         password: string,
-     }
+    private LoginDataStore: {
+        loading: boolean;
+        username: string,
+        password: string,
+    }
 
-     private apiUrl: string;
-     private token: string;
-     private signedInUser: ISignedInUser;
+    private apiUrl: string;
+    private token: string;
+    private signedInUser: ISignedInUser;
 
     jwtHelper: JwtHelper = new JwtHelper();
 
@@ -54,17 +54,17 @@ export class SignedInUserService {
         this.initLogoutSubscription()
     }
 
-    private initLogoutSubscription(){
+    private initLogoutSubscription() {
         this.LoginEvents.logOut.subscribe(() => {
             this.logOut();
         })
     }
 
-    private initLoginFailSubscription(){
+    private initLoginFailSubscription() {
 
     }
 
-    private initGetLoginSuccessSubscription(){
+    private initGetLoginSuccessSubscription() {
         this.LoginEvents.loginSuccess.subscribe((data) => {
             this.signedInUser = this.jwtHelper.decodeToken(data.token);
             this.setToken(data.token);
@@ -73,9 +73,9 @@ export class SignedInUserService {
     }
 
     private isTokenExpired(): void {
-         if(this.jwtHelper.isTokenExpired(this.token)) {
-             this.deleteJwt();
-         }
+        if (this.jwtHelper.isTokenExpired(this.token)) {
+            this.deleteJwt();
+        }
     }
 
     private getDefaultUser(): ISignedInUser {
@@ -92,42 +92,38 @@ export class SignedInUserService {
     }
 
     private checkForTokenInLocalSotrage(): void {
-        this.token = localStorage.getItem('id_token');
-        if(this.token){
+        this.token = localStorage.getItem('token');
+        if (this.token) {
             this.getDecodedToken();
             this.isTokenExpired();
             this._SignedInUser.next(Object.assign({}, this.signedInUser));
         }
     }
 
-     public getSignedInUserSubscription(): Observable<ISignedInUser> {
-         return this._SignedInUser.asObservable();
-     }
+    public getSignedInUserSubscription(): Observable<ISignedInUser> {
+        return this._SignedInUser.asObservable();
+    }
 
-     private setToken(token) : void {
+    private setToken(token) : void {
         this.token = token;
-        localStorage.setItem('id_token', this.token);
-     }
+        localStorage.setItem('token', this.token);
+    }
 
-     private deleteJwt() {;
-        localStorage.removeItem('id_token');
-        this.token = localStorage.getItem('id_token');
+    private deleteJwt() {;
+        localStorage.removeItem('token');
+        this.token = localStorage.getItem('token');
         this.signedInUser = this.getDefaultUser();
     }
 
-     private getDecodedToken(): void {
+    private getDecodedToken(): void {
         this.signedInUser = this.jwtHelper.decodeToken(this.token);
-        //console.log("Signedin user is", this.signedInUser);
-        this.signedInUser.token = localStorage.getItem('id_token');
-        //ifd_token is default name that angular-2-jwt library looks to get a token from localstorage
-        //console.log("Token is", localStorage.getItem('id_token'));
-     }
+        this.signedInUser.token = localStorage.getItem('token');
+    }
 
-     public logOut(): void {
-         this.deleteJwt();
-         this.signedInUser = this.getDefaultUser();
-         this._SignedInUser.next(Object.assign({}, this.signedInUser));
-         //TODO IMPLIMENT BLACKLISTING TOKEN ON NODE SERVER, WE JSUT DELETE ON THE CLIENT FOR NOW
-     }
+    public logOut(): void {
+        this.deleteJwt();
+        this.signedInUser = this.getDefaultUser();
+        this._SignedInUser.next(Object.assign({}, this.signedInUser));
+    }
 
 }

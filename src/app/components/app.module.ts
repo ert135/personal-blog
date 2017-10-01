@@ -8,6 +8,7 @@ import { AUTH_PROVIDERS } from 'angular2-jwt';
 import { FormsModule }   from '@angular/forms';
 import { AdminModule }   from './admin/admin.module';
 import { CoreComponentsModule } from './core/core-components.module'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 //components
 import { MainPage } from './main-page';
@@ -33,43 +34,44 @@ import { routing } from './routes/app.routing'
 import { EventsModule } from './events/events.module'
 
 @NgModule({
-  providers: [
-    AUTH_PROVIDERS,
-    LoginService,
-    SignedInUserService,
-    MainPostService,
-    PostDetailService,
-    NewPostService
-  ],
-  imports: [
-    BrowserModule,
-    ReactiveFormsModule,
-    HttpModule,
-    routing,
-    FormsModule,
-    AdminModule,
-    EventsModule.forRoot(),
-    CoreComponentsModule
-  ],
-  exports: [
-     MainHeader
-  ],
-  declarations: [ 
-    AppComponent, 
-    MainHeader, 
-    MainPage,
-    PostDetailComponent,
-    LoginModal,
-    loginModalWrapper,
-    UserDetailComponent,
-    Editor
-  ],
-  entryComponents: [
-    LoginModal
-  ],
-  bootstrap:[ 
-    AppComponent
-  ]
+	providers: [
+		AUTH_PROVIDERS,
+		LoginService,
+		SignedInUserService,
+		MainPostService,
+		PostDetailService,
+		NewPostService
+	],
+	imports: [
+		BrowserModule,
+		ReactiveFormsModule,
+		HttpModule,
+		routing,
+		FormsModule,
+		AdminModule,
+		EventsModule.forRoot(),
+		CoreComponentsModule,
+		BrowserAnimationsModule
+	],
+	exports: [
+		MainHeader
+	],
+	declarations: [ 
+		AppComponent, 
+		MainHeader, 
+		MainPage,
+		PostDetailComponent,
+		LoginModal,
+		loginModalWrapper,
+		UserDetailComponent,
+		Editor
+	],
+	entryComponents: [
+		LoginModal
+	],
+	bootstrap:[ 
+		AppComponent
+	]
 })
 
 export class AppModule { 

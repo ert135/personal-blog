@@ -3,10 +3,8 @@ import { Injectable }     from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { Subject } from 'rxjs/Rx';
+import { appConfig } from '../../../../config/enviroment';
 
-// Import RxJs required methods
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
 
 export interface ILoginData {
     loading: boolean;
@@ -45,7 +43,7 @@ export class LoginEvents {
      private apiUrl: string;
 
      constructor (private http: Http) {
-        this.apiUrl = 'http://blog-robertblog.rhcloud.com';
+        this.apiUrl = appConfig.apiUrl;
         this.createObservables();
         this.setupSendLoginRequestSubscription();
      }

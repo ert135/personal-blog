@@ -3,10 +3,7 @@ import { Injectable }     from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { Subject } from 'rxjs/Rx';
-
-// Import RxJs required methods
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
+import { appConfig } from '../../../../config/enviroment';
 
 export interface ISubmitPostModel {
     title: string;
@@ -31,23 +28,23 @@ export class CreatePostEvents {
      private error: string;
      private apiUrl: string;
 
-     constructor (private http: Http) {
-        this.apiUrl = 'http://blog-robertblog.rhcloud.com';
+    constructor (private http: Http) {
+        this.apiUrl = appConfig.apiUrl;
         this.createObservables();
         this.setupSendNewPostRequestSubscription();
-     }
+    }
 
-     private createObservables(): void {
+    private createObservables(): void {
         this.changeTitle = <Subject<string>> new Subject();
         this.changePictureUrl = <Subject<string>> new Subject();
         this.changePostBody = <Subject<string>> new Subject();
         this.changeSubtitle = <Subject<string>> new Subject();
         this.submitPostCompleted = <Subject<{}>> new Subject();
         this.submitPostFailed = <Subject<string>> new Subject();
-     }
+    }
 
     private setupSendNewPostRequestSubscription(): void {
-         this.submitPost.subscribe((data: ISubmitPostModel) => {
+        this.submitPost.subscribe((data: ISubmitPostModel) => {
             let headers = new Headers({ 'Content-Type': 'application/json' });
             let options = new RequestOptions({ headers: headers });
             let formData = JSON.stringify({

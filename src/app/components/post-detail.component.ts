@@ -139,9 +139,6 @@ import { LoginModal } from './login.component';
                                     <span class="glyphicon glyphicon-remove"></span>
                                 </div>
                                 <div class="post-detail__comment">
-                                    <div class="post-detail__comment-circle">
-                                         <span class="post-detail__user-icon glyphicon glyphicon-user"></span>
-                                    </div>
                                     <div class="post-detail__comment-body">
                                         <h2 class="post-detail__comments-user-name"> {{post.userName}} </h2>
                                         <h3 class="post-detail__timestamp"> {{post.postedOn}} </h3>
@@ -269,11 +266,11 @@ export class PostDetailComponent {
     }
 
     public submitComment() {
-        this.PostDetailService.createComment(this.post.id, this.user.id, this.user.name);
+        this.PostDetailService.createComment(this.post._id, this.user.id, this.user.name);
     }
 
     public deleteComment(commentId: string) {
-        this.PostDetailService.deleteComment(this.post.id, commentId);
+        this.PostDetailService.deleteComment(this.post._id, commentId);
     }
 
     public savePost(): void {
@@ -281,7 +278,7 @@ export class PostDetailComponent {
     }
 
     private getPostDate(date){
-        console.log("Post date is", date);
+
     }
 
     toggleEditTitle() {
@@ -314,16 +311,16 @@ export class PostDetailComponent {
     }
 
     typeNewPostBody(event): void {
-        console.log("Event is", event);
         this.PostDetailService.typeNewPostBody(event);
     }
 
     saveNewPostBody(): void {
-        this.PostDetailService.saveNewPostBody(this.post.id);
+        this.PostDetailService.saveNewPostBody(this.post._id);
     }
 
     saveNewTitle(): void {
-        this.PostDetailService.saveNewTitle(this.post.id);
+        console.log('post is', this.post)
+        this.PostDetailService.saveNewTitle(this.post._id);
     }
 
 }
