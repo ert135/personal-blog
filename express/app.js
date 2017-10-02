@@ -2,25 +2,19 @@ var express = require('express');
 var path = require('path');
 var app = express();
 var angularApp = "../index.html"
-var port = 8080;
+var port = 8081;
 var path = require('path');
 
 app.get('/', function(req, res) {
-    res.sendFile(path.resolve(__dirname + '/../app/index.html'));
+    res.sendFile(path.resolve(__dirname + '/../dist/index.html'));
 });
 
-app.use(express.static(__dirname + '/../public'));
-app.use('/static', express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/../dist'));
+app.use('/static', express.static(__dirname + '/dist'));
 
-app.use(express.static(__dirname + '/../node_modules'));
-app.use('/static', express.static(__dirname + '/node_modules'));
+app.use(express.static(__dirname + '/../dist/assets'));
+app.use('/static', express.static(__dirname + '/dist/assets'));
 
-app.use(express.static(__dirname + '/../app'));
-app.use('/static', express.static(__dirname + '/app'));
-
-app.use('/', express.static(path.join(__dirname + '/../')));
-
-console.log("THIS IS THE ROUTE", path.join(__dirname + '/../app/build/js'));
 
 app.get('*', function(req, res) {
     res.sendFile(path.resolve(__dirname + '/../app/index.html'));
