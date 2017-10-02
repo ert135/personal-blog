@@ -10,17 +10,17 @@ import
 
 
 @Component({
-  selector: 'htmleditor',
-  template: `
-  <ckeditor
-    [(ngModel)]="text"
-    [config]="{uiColor: '#424242'}"
-    (change)="onChange($event)"
-    (ready)="onReady($event)"
-    (focus)="onFocus($event)"
-    (blur)="onBlur($event)"
-    debounce="500">
-  </ckeditor>
+    selector: 'htmleditor',
+    template: `
+    <ckeditor
+        [(ngModel)]="text"
+        [config]="{uiColor: '#424242'}"
+        (change)="onChange($event)"
+        (ready)="onReady($event)"
+        (focus)="onFocus($event)"
+        (blur)="onBlur($event)"
+        debounce="500">
+    </ckeditor>
   `
 })
 export class HtmlEditor {
@@ -31,13 +31,11 @@ export class HtmlEditor {
 
     private ckeditorContent: string;
 
-
-    constructor(){
-    this.ckeditorContent = `<p></p>`;
+    constructor() {
+        this.ckeditorContent = `<p></p>`;
     }
 
     private onChange(event) {
-      console.log("CXhange called¬!¬!", event);
         this.textUpdated.emit(event);
     }
 
