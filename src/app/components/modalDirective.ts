@@ -1,8 +1,6 @@
-import {Directive, ComponentFactoryResolver, ComponentFactory, ComponentRef} from '@angular/core';
-
-import {ViewContainerRef} from '@angular/core';
-import {LoginModal} from './login.component';
-
+import { Directive, ComponentFactoryResolver, ComponentFactory, ComponentRef } from '@angular/core';
+import { ViewContainerRef } from '@angular/core';
+import { LoginModal } from './login.component';
 
 @Directive({
     selector: '[loginmodalwrapper]',
@@ -14,6 +12,7 @@ export class loginModalWrapper {
     ) {}
     
     public createDialog(dialogComponent: { new(): LoginModal }): ComponentRef<LoginModal> {
+
         this.viewContainer.clear();
 
         let dialogComponentFactory = this.componentFactoryResolver.resolveComponentFactory(dialogComponent);

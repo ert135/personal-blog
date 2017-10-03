@@ -163,10 +163,10 @@ import { LoginModal } from './login.component';
                             *ngIf="editMode && user.id && !savingComment"
                             [@loadingState]="editmode == false"
                         >
-                            <editor
+                            <simple-editor
                                 (textUpdated)="updateCommentText($event)"
                                 (submit)="submitComment($event)"
-                            ></editor>
+                            ></simple-editor>
                         </div>
                     </div>
                 </div>

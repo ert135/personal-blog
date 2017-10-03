@@ -12,10 +12,9 @@
 
     @media only screen and (max-width: 1200px) {
          flex-direction: column;
-
     }
 
-    &__aside{
+    &__aside {
         width: 400px;
         height: 100vh;
         position: fixed;
@@ -39,13 +38,15 @@
     &__content{
         margin-left: 400px;
         background-color: white;
-        padding: 50px;
+        padding: 40px;
+        padding-top: 30px;
         min-height: 1000px;
         width: 100%;
-            @media only screen and (max-width: 1200px) {
-                margin-left:0;
-                padding:30px;
-            }
+
+        @media only screen and (max-width: 1200px) {
+            margin-left:0;
+            padding:30px;
+        }
     }
 
     &__title {
@@ -62,9 +63,10 @@
 
     &__info-bar {
         display:flex;
+        border-bottom: 1px solid grey
     }
 
-    &__info-text{
+    &__info-text {
         color:#222;
         font-size: 20px;
             &--first{
@@ -137,14 +139,13 @@
     &__title-edit-icon {
         font-size: 3rem;
         cursor: pointer;
-        //styles to go here
     }
 
-    &__input-group{
+    &__input-group {
         width:100%;
     }
 
-    &__comment-circle{
+    &__comment-circle {
         border-radius: 50%;
         min-width: 100px;
         height: 100px;
@@ -155,7 +156,7 @@
         align-items: center;
     }
 
-    &__body-edit-icon{
+    &__body-edit-icon {
         position: absolute!important;
         top:10px!important;
         right:10px!important;
@@ -163,13 +164,19 @@
         cursor: pointer;
     }
 
-    &__body-save-buttons{
+    &__body-save-buttons {
         width:100%;
     }
 
-    &__user-icon{
+    &__user-icon {
         font-size:5rem;
         color:white;
+    }
+
+    &__title-save-icons {
+        display: flex;
+        align-items: flex-end;
+        padding-bottom: 1rem;
     }
 
     &__sign-in-message {

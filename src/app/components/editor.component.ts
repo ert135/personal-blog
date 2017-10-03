@@ -5,7 +5,7 @@ import {Component,
         Output } from '@angular/core';
 
 @Component({
-  selector: 'editor',
+  selector: 'simple-editor',
   template: `
   <div class="editor__container">
         <textarea

@@ -10,6 +10,7 @@ import './app/less/login-modal.less';
 import './app/less/main-header.less';
 import './app/less/post-detail.less';
 import './app/less/posts.less';
+import './app/less/editor-simple.less';
 
 import { AppModule } from './app/components/app.module';
 
