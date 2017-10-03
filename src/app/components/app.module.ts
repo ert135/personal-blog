@@ -9,6 +9,7 @@ import { FormsModule }   from '@angular/forms';
 import { AdminModule }   from './admin/admin.module';
 import { CoreComponentsModule } from './core/core-components.module'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MomentModule } from 'angular2-moment';
 
 //components
 import { MainPage } from './main-page';
@@ -51,7 +52,8 @@ import { EventsModule } from './events/events.module'
 		AdminModule,
 		EventsModule.forRoot(),
 		CoreComponentsModule,
-		BrowserAnimationsModule
+		BrowserAnimationsModule,
+		MomentModule
 	],
 	exports: [
 		MainHeader

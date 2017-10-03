@@ -33,7 +33,7 @@ import {
 							<div class="excerpt">{{post.subtitle}} </div>
 							<div class="postinfo">
 								<span>
-									{{post.postedOn}}
+									{{post.postedOn | amDateFormat:'LL'}}
 								</span> 
 							</div>
 						</div>

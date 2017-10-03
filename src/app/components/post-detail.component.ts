@@ -19,6 +19,7 @@ import {
     transition } from '@angular/core';
 
 import { LoginModal } from './login.component';
+import * as moment from 'moment';
 
 @Component({
     selector: 'post-detail',
@@ -90,7 +91,7 @@ import { LoginModal } from './login.component';
                             {{post.postedBy}}
                         </h2>
                         <h2 class="post-detail__info-text">
-                            {{post.postedOn}}
+                            {{post.postedOn | amDateFormat:'LL'}}
                         </h2>
                     </div>
                     <div class="post-detail__post-body">

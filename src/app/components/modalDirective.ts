@@ -13,6 +13,8 @@ export class loginModalWrapper {
     
     public createDialog(dialogComponent: { new(): LoginModal }): ComponentRef<LoginModal> {
 
+        console.log('View container is ', this.viewContainer)
+
         this.viewContainer.clear();
 
         let dialogComponentFactory = this.componentFactoryResolver.resolveComponentFactory(dialogComponent);
